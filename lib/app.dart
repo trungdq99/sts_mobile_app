@@ -1,12 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:sts/pages/login_page.dart';
+import 'package:sts/pages/splash_page.dart';
 import 'package:sts/utils/route_util.dart';
 
+import 'blocs/authentication/authentication_bloc.dart';
+import 'repository/authentication_repository.dart';
+
 class App extends StatelessWidget {
+
+  final AuthenticationRepository authenticationRepository;
+
+  const App({Key key, @required this.authenticationRepository}) : super(key: key);
+
+  
   @override
   Widget build(BuildContext context) {
-    return AppView();
+    return RepositoryProvider.value(
+      value: authenticationRepository,
+      child: BlocProvider(
+        create: (_) => AuthenticationBloc(
+          authenticationRepository: authenticationRepository,
+        ),
+        child: AppView(),
+      ),
+    );
   }
 }
 
@@ -20,8 +38,7 @@ class AppView extends StatelessWidget {
       // getPages: RouteUtil.getPage(),
       onGenerateRoute: RouteUtil.onGenerateRoute,
       color: Colors.teal,
-      home: LoginPage(),
-      
+      home: SplashPage(),
       theme: ThemeData(
         primaryColor: Colors.teal,
         accentColor: Colors.teal,
@@ -32,14 +49,35 @@ class AppView extends StatelessWidget {
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
-          bodyText2: TextStyle(fontSize: 16, fontWeight: FontWeight.normal,),
+          bodyText2: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.normal,
+          ),
           // title: TextStyle(fontSize: 16, fontWeight: FontWeight.normal,color: Colors.red,),
-          // headline1: 
-      //     headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.normal),
-      // headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
-      // bodyText2: TextStyle(fontSize: 14.0,),
+          // headline1:
+          //     headline1: TextStyle(fontSize: 72.0, fontWeight: FontWeight.normal),
+          // headline6: TextStyle(fontSize: 36.0, fontStyle: FontStyle.italic),
+          // bodyText2: TextStyle(fontSize: 14.0,),
         ),
       ),
+      builder: (context, child) {
+        return BlocListener<AuthenticationBloc, AuthenticationState>(
+          listener: (context, state) {
+            switch (state.status) {
+              case AuthenticationStatus.authenticated:
+              Get.offAllNamed(RouteUtil.MAIN);
+                break;
+              case AuthenticationStatus.unauthenticated:
+                Get.offAllNamed(RouteUtil.LOGIN);
+                break;
+              default:
+                break;
+            }
+          },
+          child: child,
+        );
+      },
+
 
       // builder: (context, child) => Scaffold(
       //   body: MultiBlocListener(listeners: [

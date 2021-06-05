@@ -199,7 +199,9 @@ class EditProfilePage extends StatelessWidget {
         hintText: 'Gender',
         prefixIcon: Padding(
           padding: const EdgeInsets.all(10.0),
-          child: FaIcon(FontAwesomeIcons.venusMars, ),
+          child: FaIcon(
+            FontAwesomeIcons.venusMars,
+          ),
         ),
         border: OutlineInputBorder(
           borderSide: BorderSide(

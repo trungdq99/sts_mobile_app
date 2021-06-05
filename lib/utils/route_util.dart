@@ -4,12 +4,13 @@ import 'package:get/route_manager.dart';
 import 'package:sts/pages/add_request_page.dart';
 import 'package:sts/pages/info/edit_profile_page.dart';
 import 'package:sts/pages/info/job_info_page.dart';
-import 'package:sts/pages/login_page.dart';
+import 'package:sts/pages/login/login_page.dart';
 import 'package:sts/pages/main/main_page.dart';
 import 'package:sts/pages/main/tab/info_page.dart';
 import 'package:sts/pages/main/tab/schedule_page.dart';
 import 'package:sts/pages/select_location/select_location_page.dart';
 import 'package:sts/pages/shift_detail_page.dart';
+import 'package:sts/pages/splash_page.dart';
 
 class RouteUtil {
   static const String LOGIN = '/login';
@@ -50,6 +51,9 @@ class RouteUtil {
     switch (settings.name) {
       case LOGIN:
         page = LoginPage();
+        break;
+      case SPLASH:
+        page = SplashPage();
         break;
       case SELECT_LOCATION:
         page = SelectLocationPage();

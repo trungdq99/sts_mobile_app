@@ -1,39 +1,58 @@
 import 'package:equatable/equatable.dart';
-import 'package:sts/models/user_model.dart';
 
 class AuthenticationModel extends Equatable {
-  final String status;
+  final int status;
+  final String username;
   final String token;
-  final UserModel user;
-  const AuthenticationModel({
-    this.status: '',
-    this.token: '',
-    this.user: const UserModel(),
-  });
+  final String message;
 
-  static AuthenticationModel fromJson(Map<String, dynamic> json) {
-    Map<String, dynamic> user = json['user'];
+  const AuthenticationModel(
+      {this.status, this.username, this.token, this.message});
+
+  static const empty = AuthenticationModel(
+    status: 0,
+    token: '',
+    username: '',
+    message: '',
+  );
+
+  factory AuthenticationModel.fromJson(Map<String, dynamic> json) {
     return AuthenticationModel(
-      status: json['status'] ?? '',
-      token: json['token'] ?? '',
-      user: UserModel.fromJson(user) ?? UserModel(),
+      status: json['status'] as int,
+      username: json['username'] as String,
+      token: json['token'] as String,
+      message: json['message'] ?? '',
     );
   }
 
-  static AuthenticationModel fromJsonWithToken(
-      Map<String, dynamic> json, String token) {
-    Map<String, dynamic> user = json['user'];
+  Map<String, dynamic> toJson() {
+    return {
+      'status': status,
+      'username': username,
+      'token': token,
+    };
+  }
+
+  AuthenticationModel copyWith({
+    int status,
+    String username,
+    String token,
+  }) {
     return AuthenticationModel(
-      status: json['status'] ?? '',
-      token: token ?? '',
-      user: UserModel.fromJson(user) ?? UserModel(),
+      status: status ?? this.status,
+      username: username ?? this.username,
+      token: token ?? this.token,
     );
   }
 
   @override
+  bool get stringify => true;
+
+  @override
   List<Object> get props => [
         status,
+        username,
         token,
-        user,
+        message,
       ];
 }

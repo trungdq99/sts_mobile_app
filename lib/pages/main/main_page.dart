@@ -53,10 +53,10 @@ class MainPage extends StatelessWidget {
       bloc: _selectedIndexCubit,
       builder: (context, state) {
         return BottomNavigationBar(
-            items: _items,
-            onTap: _selectedIndexCubit.emit,
-            currentIndex: state,
-          );
+          items: _items,
+          onTap: _selectedIndexCubit.emit,
+          currentIndex: state,
+        );
       },
     );
   }

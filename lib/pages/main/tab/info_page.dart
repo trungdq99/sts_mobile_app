@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:sts/blocs/authentication/authentication_bloc.dart';
 import 'package:sts/utils/route_util.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class InfoPage extends StatelessWidget {
+class InfoPage extends StatefulWidget {
+  @override
+  _InfoPageState createState() => _InfoPageState();
+}
+
+class _InfoPageState extends State<InfoPage> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -32,10 +39,11 @@ class InfoPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLogoutButton(){
+  Widget _buildLogoutButton() {
     return ElevatedButton(
-      onPressed: (){
-        Get.offAllNamed(RouteUtil.LOGIN);
+      onPressed: () {
+        // Get.offAllNamed(RouteUtil.LOGIN);
+        context.read<AuthenticationBloc>().add(AuthenticationEventLogout());
       },
       child: Text('Logout'),
     );

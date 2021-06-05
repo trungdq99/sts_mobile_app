@@ -1,5 +1,5 @@
 import 'dart:ui';
 
-class ColorUtil{
+class ColorUtil {
   static const WHITE = Color(0xffffffff);
 }

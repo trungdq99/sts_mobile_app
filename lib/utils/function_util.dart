@@ -5,7 +5,6 @@ import 'package:sts/constant.dart';
 class FunctionUtil{
   static Future<bool> checkConnection() async {
     ConnectivityResult result = ConnectivityResult.none;
-    // Platform messages may fail, so we use a try/catch PlatformException.
     try {
       result = await connectivity.checkConnectivity();
     } on PlatformException catch (e) {

@@ -1,24 +1,21 @@
 import 'package:get/get.dart';
 
-enum ResponseStatus {
-  UNAUTHENTICATED,
-  SUCCESS,
-  ERROR,
-  TIME_OUT,
-  NO_CONNECTION,
-  SEVER_ERROR,
-}
-
 class ResponseStatusUtil {
 
-  static ResponseStatus checkResponse(Response response) {
-    if (response == null) return ResponseStatus.ERROR;
+  static const String SUCCESS = 'success';
+  static const String ERROR = 'error';
+  static const String UNAUTHENTICATED = 'unauthenticated';
+  static const String TIME_OUT = 'time_out';
+  static const String NO_CONNECTION = 'no_connection';
+
+  static String checkResponse(Response response) {
+    if (response == null) return ERROR;
     if (response.statusCode >= 200 && response.statusCode <= 204) {
-      return ResponseStatus.SUCCESS;
+      return SUCCESS;
     }
     if (response.statusCode == 401) {
-      return ResponseStatus.UNAUTHENTICATED;
+      return UNAUTHENTICATED;
     }
-    return ResponseStatus.ERROR;
+    return ERROR;
   }
 }

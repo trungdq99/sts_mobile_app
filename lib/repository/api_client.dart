@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:sts/constant.dart';
 import 'package:sts/utils/function_util.dart';
+import 'package:sts/utils/response_status_util.dart';
 import 'package:sts/utils/url_util.dart';
 
 enum RequestMethod {
@@ -13,72 +15,81 @@ enum RequestMethod {
 class ApiClient extends GetConnect {
   ApiClient();
 
-  // Future fetchData({
-  //   String api,
-  //   RequestMethod method,
-  //   Map<String, String> header,
-  //   dynamic body,
-  // }) async {
-  //   if (await UtilFunction.checkConnection()) {
-  //     print('Call api: ${UtilUrl.BASE_URL}/$api');
-  //     Response response;
+  Future fetchData({
+    String api,
+    RequestMethod method,
+    Map<String, String> header,
+    dynamic body,
+  }) async {
+    if (await FunctionUtil.checkConnection()) {
+      print('Call api: ${UrlUtil.BASE_URL}/$api');
+      print('Method: $method');
+      // if(header != null && header.isNotEmpty){
+      //   print(header.toString());
+      // }
+      // if(body != null && !body.isBlank){
+      //   print(body.toString());
+      // }
+      Response response;
 
-  //     if (method == RequestMethod.GET) {
-  //       response =
-  //           await get('${UtilUrl.BASE_URL}/$api', headers: header).timeout(
-  //         Duration(milliseconds: 5000),
-  //         onTimeout: () {
-  //           throw Exception(UtilStatus.TIME_OUT);
-  //         },
-  //       );
-  //     } else if (method == RequestMethod.POST) {
-  //       response = await post(
-  //         '${UtilUrl.BASE_URL}/$api',
-  //         body,
-  //         headers: header,
-  //       ).timeout(
-  //         Duration(milliseconds: 5000),
-  //         onTimeout: () {
-  //           throw Exception(UtilStatus.TIME_OUT);
-  //         },
-  //       );
-  //     } else if (method == RequestMethod.PUT) {
-  //       response = await put(
-  //         '${UtilUrl.BASE_URL}/$api',
-  //         body,
-  //         headers: header,
-  //       ).timeout(
-  //         Duration(milliseconds: 5000),
-  //         onTimeout: () {
-  //           throw Exception(UtilStatus.TIME_OUT);
-  //         },
-  //       );
-  //     } else if (method == RequestMethod.PATCH) {
-  //       response = await patch(
-  //         '${UtilUrl.BASE_URL}/$api',
-  //         body,
-  //         headers: header,
-  //       ).timeout(
-  //         Duration(milliseconds: 5000),
-  //         onTimeout: () {
-  //           throw Exception(UtilStatus.TIME_OUT);
-  //         },
-  //       );
-  //     } else if (method == RequestMethod.DELETE) {
-  //       response = await delete(
-  //         '${UtilUrl.BASE_URL}/$api',
-  //         headers: header,
-  //       ).timeout(
-  //         Duration(milliseconds: 5000),
-  //         onTimeout: () {
-  //           throw Exception(UtilStatus.TIME_OUT);
-  //         },
-  //       );
-  //     }
+      if (method == RequestMethod.GET) {
+        response =
+            await get('${UrlUtil.BASE_URL}/$api', headers: header).timeout(
+          Duration(milliseconds: REQUEST_TIME_OUT),
+          onTimeout: () {
+            throw Exception(ResponseStatusUtil.TIME_OUT);
+          },
+        );
+      } else if (method == RequestMethod.POST) {
+        response = await post(
+          '${UrlUtil.BASE_URL}/$api',
+          body,
+          headers: header,
+        ).timeout(
+          Duration(milliseconds: REQUEST_TIME_OUT),
+          onTimeout: () {
+            throw Exception(ResponseStatusUtil.TIME_OUT);
+          },
+        );
+      } else if (method == RequestMethod.PUT) {
+        response = await put(
+          '${UrlUtil.BASE_URL}/$api',
+          body,
+          headers: header,
+        ).timeout(
+          Duration(milliseconds: REQUEST_TIME_OUT),
+          onTimeout: () {
+            throw Exception(ResponseStatusUtil.TIME_OUT);
+          },
+        );
+      } else if (method == RequestMethod.PATCH) {
+        response = await patch(
+          '${UrlUtil.BASE_URL}/$api',
+          body,
+          headers: header,
+        ).timeout(
+          Duration(milliseconds: REQUEST_TIME_OUT),
+          onTimeout: () {
+            throw Exception(ResponseStatusUtil.TIME_OUT);
+          },
+        );
+      } else if (method == RequestMethod.DELETE) {
+        response = await delete(
+          '${UrlUtil.BASE_URL}/$api',
+          headers: header,
+        ).timeout(
+          Duration(milliseconds: REQUEST_TIME_OUT),
+          onTimeout: () {
+            throw Exception(ResponseStatusUtil.TIME_OUT);
+          },
+        );
+      }
 
-  //     print('Status: ${response?.statusCode}');
-  //     print('Response: ${response?.body}');
-  //     return response;
-  //   }
-  // }
+      print('Status: ${response?.statusCode}');
+      print('Response: ${response?.body}');
+      return response;
+    }else{
+      throw Exception(ResponseStatusUtil.NO_CONNECTION);
+    }
+  }
 }
