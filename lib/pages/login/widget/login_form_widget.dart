@@ -1,7 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
+import 'package:sts/custom_widget/button_custom_widget.dart';
+import 'package:sts/custom_widget/full_screen_progressing_custom_widget.dart';
+import 'package:sts/custom_widget/text_field_custom_widget.dart';
 import 'package:sts/pages/login/cubit/login_cubit.dart';
 import 'package:formz/formz.dart';
+import 'package:sts/utils/color_util.dart';
+import 'package:sts/utils/gradient_util.dart';
+import 'package:sts/utils/space_util.dart';
+import 'package:sts/utils/string_util.dart';
 
 class LoginForm extends StatelessWidget {
   @override
@@ -9,11 +17,11 @@ class LoginForm extends StatelessWidget {
     return Column(
       children: [
         _usernameInput(),
-        SizedBox(
-          height: 10,
-        ),
+        SpaceUtil.verticalDefault(),
         _passwordInput(),
-        SizedBox(
+        SpaceUtil.verticalSmall(),
+        Container(
+          alignment: Alignment.center,
           height: 20,
           child: BlocBuilder<LoginCubit, LoginState>(
             buildWhen: (previous, current) => previous.status != current.status,
@@ -21,14 +29,14 @@ class LoginForm extends StatelessWidget {
               if (state.status.isSubmissionFailure) {
                 return Text(
                   state.message,
-                  style: TextStyle(
+                  style: Get.textTheme.bodyText1.copyWith(
                     color: Colors.red,
                   ),
                 );
               } else if (state.status.isSubmissionSuccess) {
                 return Text(
                   'Login Successful!',
-                  style: TextStyle(
+                  style: Get.textTheme.bodyText1.copyWith(
                     color: Colors.green,
                   ),
                 );
@@ -45,90 +53,76 @@ class LoginForm extends StatelessWidget {
   }
 
   Widget _usernameInput() {
-    // return TextField(
-    //   decoration: InputDecoration(
-    //     hintText: 'Email',
-    //     border: OutlineInputBorder(
-    //       borderSide: BorderSide(
-    //         color: Colors.black,
-    //       ),
-    //     ),
-    //   ),
-    // );
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) => previous.username != current.username,
       builder: (context, state) {
-        return TextField(
-          // key: const Key('loginForm_emailInput_textField'),
+        return TextFieldCustomWidget(
+          hintText: StringUtil.USERNAME_INPUT_HINT,
+          maxLength: 50,
+          maxLines: 1,
+          margin: EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          errorText:
+              state.username.invalid ? StringUtil.USERNAME_INPUT_ERROR : null,
           onChanged: (username) =>
               context.read<LoginCubit>().usernameChanged(username),
-          decoration: InputDecoration(
-            hintText: 'Username',
-            helperText: '',
-            errorText: state.username.invalid ? 'invalid username' : null,
-            border: OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.black,
-              ),
-            ),
-          ),
         );
       },
     );
   }
 
   Widget _passwordInput() {
-    // return TextField(
-    //   obscureText: true,
-    //   decoration: InputDecoration(
-    //     hintText: 'Password',
-    //     border: OutlineInputBorder(),
-    //   ),
-    // );
     return BlocBuilder<LoginCubit, LoginState>(
       buildWhen: (previous, current) => previous.password != current.password,
       builder: (context, state) {
-        return TextField(
-          // key: const Key('loginForm_passwordInput_textField'),
+        return TextFieldCustomWidget(
+          hintText: StringUtil.PASSWORD_INPUT_HINT,
+          obscureText: true,
+          maxLines: 1,
+          maxLength: 20,
+          margin: EdgeInsets.symmetric(
+            horizontal: 20,
+          ),
+          errorText:
+              state.password.invalid ? StringUtil.PASSWORD_INPUT_ERROR : null,
           onChanged: (password) =>
               context.read<LoginCubit>().passwordChanged(password),
-          // obscureText: true,
-          decoration: InputDecoration(
-            hintText: 'Password',
-            border: OutlineInputBorder(),
-            helperText: '',
-            errorText: state.password.invalid ? 'invalid password' : null,
-          ),
         );
       },
     );
   }
 
   Widget _loginButton() {
-    // return OutlinedButton(
-    //   child: const Text(
-    //     'Login',
-    //   ),
-    //   onPressed: () {
-    //     // Get.offAndToNamed(RouteUtil.MAIN);
-    //   },
-    // );
-    return BlocBuilder<LoginCubit, LoginState>(
+    return BlocConsumer<LoginCubit, LoginState>(
       buildWhen: (previous, current) => previous.status != current.status,
+      listenWhen: (previous, current) => previous.status != current.status,
+      listener: (context, state) {
+        if (state.status.isSubmissionInProgress) {
+          if (Get.isDialogOpen) Get.back();
+          Get.dialog(FullScreenProgressingCustomWidget());
+        } else {
+          if (Get.isDialogOpen) {
+            Get.back();
+          }
+        }
+      },
       builder: (context, state) {
-        return state.status.isSubmissionInProgress
-            ? const CircularProgressIndicator()
-            : OutlinedButton(
-                child: const Text(
-                  'Login',
-                ),
-                onPressed: state.status.isValidated
-                    ? () {
-                        FocusScope.of(context).unfocus();
-                        context.read<LoginCubit>().loginSubmitted();
-                      }
-                    : null,
-              );
+        return ButtonCustomWidget(
+          color: Get.theme.primaryColor,
+          onPressed: state.status.isValidated
+              ? () {
+                  FocusScope.of(context).unfocus();
+                  context.read<LoginCubit>().loginSubmitted();
+                }
+              : null,
+          child: Text(
+            StringUtil.LOGIN_BUTTON,
+            style: Get.textTheme.button.copyWith(
+              color: Get.theme.backgroundColor,
+            ),
+          ),
+        );
       },
     );
   }

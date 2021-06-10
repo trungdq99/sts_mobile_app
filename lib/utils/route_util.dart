@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/route_manager.dart';
 import 'package:sts/pages/add_request_page.dart';
-import 'package:sts/pages/info/edit_profile_page.dart';
-import 'package:sts/pages/info/job_info_page.dart';
 import 'package:sts/pages/login/login_page.dart';
 import 'package:sts/pages/main/main_page.dart';
-import 'package:sts/pages/main/tab/info_page.dart';
-import 'package:sts/pages/main/tab/schedule_page.dart';
+import 'package:sts/pages/main/tab/people_page.dart';
+import 'package:sts/pages/main/tab/home_page.dart';
+import 'package:sts/pages/main/tab/profile_page.dart';
+import 'package:sts/pages/main/tab/register_page.dart';
+import 'package:sts/pages/main/tab/schedule/schedule_page.dart';
+import 'package:sts/pages/profile/change_password_page.dart';
+import 'package:sts/pages/profile/edit_profile_page.dart';
+import 'package:sts/pages/profile/job_info_page.dart';
 import 'package:sts/pages/select_location/select_location_page.dart';
 import 'package:sts/pages/shift_detail_page.dart';
 import 'package:sts/pages/splash_page.dart';
@@ -17,33 +21,16 @@ class RouteUtil {
   static const String SPLASH = '/splash';
   static const String SELECT_LOCATION = '/select_location';
   static const String MAIN = '/main';
+  static const String HOME = 'home';
+  static const String REGISTER = '/register';
   static const String SCHEDULE = '/schedule';
-  static const String INFO = '/info';
+  static const String PEOPLE = '/people';
+  static const String PROFILE = '/profile';
   static const String EDIT_PROFILE = '/edit_profile';
   static const String JOB_INFO = '/job_info';
+  static const String CHANGE_PASSWORD = '/change_password';
   static const String SHIFT_DETAIL = '/shift_detail';
   static const String ADD_REQUEST = '/add_request';
-
-  // static const String
-  static List<GetPage> getPage() {
-    return [
-      GetPage(
-        name: LOGIN,
-        page: () => LoginPage(),
-        transition: Transition.cupertino,
-      ),
-      // GetPage(
-      //   name: SPLASH,
-      //   page: () => SplashPage(),
-      //   transition: Transition.cupertino,
-      // ),
-      GetPage(
-        name: SELECT_LOCATION,
-        page: () => SelectLocationPage(),
-        transition: Transition.cupertino,
-      ),
-    ];
-  }
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     Widget page;
@@ -62,17 +49,29 @@ class RouteUtil {
       case MAIN:
         page = MainPage();
         break;
+      case HOME:
+        page = HomePage();
+        break;
+      case REGISTER:
+        page = RegisterPage();
+        break;
       case SCHEDULE:
         page = SchedulePage();
         break;
-      case INFO:
-        page = InfoPage();
+      case PEOPLE:
+        page = PeoplePage();
+        break;
+      case PROFILE:
+        page = ProfilePage();
         break;
       case EDIT_PROFILE:
         page = EditProfilePage();
         break;
       case JOB_INFO:
         page = JobInfoPage();
+        break;
+      case CHANGE_PASSWORD:
+        page = ChangePasswordPage();
         break;
       case SHIFT_DETAIL:
         page = ShiftDetailPage();

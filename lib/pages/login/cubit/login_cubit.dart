@@ -31,14 +31,18 @@ class LoginCubit extends Cubit<LoginState> {
   Future<void> loginSubmitted() async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));
+    await Future.delayed(Duration(milliseconds: 500));
     try {
       await _authenticationRepository.loginWithUsernameAndPassword(
         username: state.username.value,
         password: state.password.value,
       );
       emit(state.copyWith(status: FormzStatus.submissionSuccess));
-    } catch(e) {
-      emit(state.copyWith(status: FormzStatus.submissionFailure, message: e.toString()));
+    } catch (e) {
+      emit(state.copyWith(
+        status: FormzStatus.submissionFailure,
+        message: e.toString().split(': ')[1],
+      ));
     }
   }
 }

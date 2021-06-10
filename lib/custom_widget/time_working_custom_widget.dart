@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:measured_size/measured_size.dart';
+import 'package:sts/utils/color_util.dart';
 
 class TimeWorkingCustomWidget extends StatefulWidget {
   @override
@@ -29,7 +30,10 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
           },
           child: Column(
             children: [
-              Icon(FontAwesomeIcons.hourglassStart),
+              Icon(
+                FontAwesomeIcons.hourglassStart,
+                color: ColorUtil.BLUE,
+              ),
               SizedBox(
                 height: 10,
               ),
@@ -37,10 +41,16 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
             ],
           ),
         ),
-        FaIcon(FontAwesomeIcons.minus),
+        FaIcon(
+          FontAwesomeIcons.minus,
+          color: ColorUtil.BLUE,
+        ),
         Column(
           children: [
-            Icon(FontAwesomeIcons.hourglassEnd),
+            Icon(
+              FontAwesomeIcons.hourglassEnd,
+              color: ColorUtil.BLUE,
+            ),
             SizedBox(
               height: 10,
             ),
@@ -50,13 +60,16 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
         SizedBox(
           height: _height,
           child: VerticalDivider(
-            color: Colors.black,
+            color: ColorUtil.BLUE,
             thickness: 1,
           ),
         ),
         Column(
           children: [
-            Icon(FontAwesomeIcons.solidHourglass),
+            Icon(
+              FontAwesomeIcons.solidHourglass,
+              color: ColorUtil.BLUE,
+            ),
             SizedBox(
               height: 10,
             ),

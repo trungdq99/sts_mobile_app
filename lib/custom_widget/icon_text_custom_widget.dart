@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class IconTextCustomWidget extends StatelessWidget {
   final IconData icon;
   final String text;
   final Color color;
-  final Color iconColor;
   final double iconSize;
   final double textSize;
   final double padding;
@@ -12,12 +12,11 @@ class IconTextCustomWidget extends StatelessWidget {
   const IconTextCustomWidget({
     @required this.icon,
     @required this.text,
-    this.color: Colors.black,
-    this.iconColor,
+    this.color,
     this.iconSize: 20,
     this.textSize: 16,
     this.padding: 10,
-    this.fontWeight: FontWeight.bold,
+    this.fontWeight: FontWeight.normal,
   });
   @override
   Widget build(BuildContext context) {
@@ -27,7 +26,7 @@ class IconTextCustomWidget extends StatelessWidget {
         Icon(
           icon,
           size: iconSize,
-          // color: iconColor ?? color,
+          color: color ?? Get.theme.primaryColor,
         ),
         SizedBox(
           width: text.isNotEmpty ? padding : 0,
@@ -35,11 +34,11 @@ class IconTextCustomWidget extends StatelessWidget {
         Flexible(
           child: Text(
             text,
-            // style: UtilTextStyle.defaultTextStyle(
-            //   color: color,
-            //   fontSize: textSize,
-            //   fontWeight: fontWeight,
-            // ),
+            style: TextStyle(
+              color: color ?? Get.theme.primaryColor,
+              fontSize: textSize,
+              fontWeight: fontWeight,
+            ),
             overflow: TextOverflow.ellipsis,
           ),
         )

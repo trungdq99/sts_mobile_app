@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:sts/custom_widget/logo_custom_widget.dart';
 import 'package:sts/pages/login/cubit/login_cubit.dart';
 import 'package:sts/repository/authentication_repository.dart';
+import 'package:sts/utils/color_util.dart';
 import 'package:sts/utils/space_util.dart';
+import 'package:sts/utils/string_util.dart';
 
 import 'widget/login_form_widget.dart';
 
@@ -25,15 +27,16 @@ class LoginPage extends StatelessWidget {
                 LogoCustomWidget(),
                 SpaceUtil.verticalDefault(),
                 BlocProvider(
-                  create: (context) => LoginCubit(context.read<AuthenticationRepository>()),
+                  create: (context) =>
+                      LoginCubit(context.read<AuthenticationRepository>()),
                   child: LoginForm(),
                 ),
                 _forgotPasswordButton(),
-                Divider(
-                  color: Colors.black,
-                ),
-                _loginWithText(),
-                _buildGoogleButotn(),
+                // Divider(
+                //   color: Colors.black,
+                // ),
+                // _loginWithText(),
+                // _buildGoogleButotn(),
               ],
             ),
           ),
@@ -45,21 +48,27 @@ class LoginPage extends StatelessWidget {
   Widget _forgotPasswordButton() {
     return TextButton(
       onPressed: () {},
-      child: Text('Forgot password'),
+      child: Text(
+        StringUtil.FORGOT_PASSWORD_BUTTON,
+        style: Get.textTheme.button.copyWith(
+          color: ColorUtil.BLUE,
+          fontWeight: FontWeight.w900,
+        ),
+      ),
     );
   }
 
-  Widget _loginWithText() {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Text('or login with'),
-    );
-  }
+  // Widget _loginWithText() {
+  //   return Padding(
+  //     padding: const EdgeInsets.all(10.0),
+  //     child: Text('or login with'),
+  //   );
+  // }
 
-  Widget _buildGoogleButotn() {
-    return OutlinedButton(
-      onPressed: () {},
-      child: FaIcon(FontAwesomeIcons.google),
-    );
-  }
+  // Widget _buildGoogleButotn() {
+  //   return OutlinedButton(
+  //     onPressed: () {},
+  //     child: FaIcon(FontAwesomeIcons.google),
+  //   );
+  // }
 }

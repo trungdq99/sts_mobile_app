@@ -37,20 +37,9 @@ class AuthenticationBloc
       yield* _mapLoadPreviousLoginToState(event);
     } else if (event is AuthenticationEventLogout) {
       yield* _mapLogoutToState(event);
+    } else if (event is AuthenticationEventUnknown) {
+      yield AuthenticationState();
     }
-    // if (event is AuthenticationEventLoadPreviousLogin) {
-    //   yield* _mapLoadPreviousLoginToState(event);
-    // } else if (event is AuthenticationEventAuthenticated) {
-    //   yield* _mapAuthenticatedToState(event);
-    // } else if (event is AuthenticationEventLogout) {
-    //   yield* _mapLogoutToState(event, state);
-    // } else if (event is AuthenticationEventLoadUser) {
-    //   yield* _mapLoadUserToState(event, state);
-    // } else if (event is AuthenticationEventUnknown) {
-    //   yield AuthenticationState();
-    // } else if (event is AuthenticationEventUpdateUser) {
-    //   yield* _mapUpdateUserToState(event, state);
-    // }
   }
 
   @override

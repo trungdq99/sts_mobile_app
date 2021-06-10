@@ -5,7 +5,7 @@ class UserModel extends Equatable {
   final String email;
   final String firstName;
   final String lastName;
-  final String dateOfBirth;
+  final String dob;
   final String phone;
   final bool gender;
   final String address;
@@ -18,7 +18,7 @@ class UserModel extends Equatable {
     this.email,
     this.firstName,
     this.lastName,
-    this.dateOfBirth,
+    this.dob,
     this.phone,
     this.gender,
     this.address,
@@ -33,7 +33,7 @@ class UserModel extends Equatable {
       email: json['email'] as String,
       firstName: json['firstName'] as String,
       lastName: json['lastName'] as String,
-      dateOfBirth: json['dateOfBirth'] as String,
+      dob: json['dob'] as String,
       phone: json['phone'] as String,
       gender: json['gender'],
       address: json['address'] as String,
@@ -49,7 +49,7 @@ class UserModel extends Equatable {
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
-      'dateOfBirth': dateOfBirth,
+      'dob': dob,
       'phone': phone,
       'gender': gender,
       'address': address,
@@ -66,7 +66,7 @@ class UserModel extends Equatable {
     String passwordSalt,
     String firstName,
     String lastName,
-    String dateOfBirth,
+    String dob,
     String phone,
     bool gender,
     String address,
@@ -79,7 +79,7 @@ class UserModel extends Equatable {
       email: email ?? this.email,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
-      dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      dob: dob ?? this.dob,
       phone: phone ?? this.phone,
       gender: gender ?? this.gender,
       address: address ?? this.address,
@@ -99,7 +99,7 @@ class UserModel extends Equatable {
       email,
       firstName,
       lastName,
-      dateOfBirth,
+      dob,
       phone,
       gender,
       address,
