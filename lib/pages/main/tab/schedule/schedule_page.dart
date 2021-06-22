@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:sts/custom_widget/app_bar_custom_widget.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
@@ -14,7 +13,7 @@ import 'package:sts/utils/route_util.dart';
 import 'package:sts/utils/space_util.dart';
 
 class SchedulePage extends StatelessWidget {
-  final CalendarCubit _calendarCubit = CalendarCubit();
+  // final CalendarCubit _calendarCubit = CalendarCubit();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,10 +46,7 @@ class SchedulePage extends StatelessWidget {
           SingleChildScrollView(
             child: Column(
               children: [
-                BlocProvider(
-                  create: (context) => _calendarCubit,
-                  child: CalendarWidget(),
-                ),
+                CalendarWidget(),
                 Row(
                   children: [
                     for (int i = 0; i < 7; i++)
@@ -113,7 +109,7 @@ class SchedulePage extends StatelessWidget {
             child: Column(
               children: [
                 BlocBuilder<CalendarCubit, CalendarState>(
-                  bloc: _calendarCubit,
+                  // bloc: _calendarCubit,
                   builder: (context, state) {
                     if (!FunctionUtil.isToday(date: state.selectedDay)) {
                       return ButtonCustomWidget(
@@ -122,9 +118,9 @@ class SchedulePage extends StatelessWidget {
                           bottomLeft: Radius.circular(20),
                           topLeft: Radius.circular(20),
                         )),
-                        margin: EdgeInsets.all(0),
+                        margin: EdgeInsets.only(bottom: 10),
                         onPressed: () {
-                          _calendarCubit.today();
+                          context.read<CalendarCubit>().today();
                         },
                         child: Text(
                           'Hôm nay',

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:sts/blocs/user/user_bloc.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
+import 'package:sts/custom_widget/circle_avatar_custom_widget.dart';
 import 'package:sts/custom_widget/icon_text_custom_widget.dart';
+import 'package:sts/custom_widget/progressing_custom_widget.dart';
 import 'package:sts/utils/color_util.dart';
+import 'package:sts/utils/route_util.dart';
 import 'package:sts/utils/space_util.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,202 +27,95 @@ class _HomePageState extends State<HomePage> {
         child: Column(
           children: [
             _buildInfo(),
-            _buildWorkingShift(),
-            // SpaceUtil.verticalBig(),
+            _buildAttendance(),
+            SpaceUtil.verticalDefault(),
+            _buildTotal(),
+            SpaceUtil.verticalDefault(),
             _buildUpcomingShift(),
             SpaceUtil.verticalDefault(),
             _buildAvailableShift(),
-            SpaceUtil.verticalDefault(),
-            _buildTimesheets(),
-            SpaceUtil.verticalBig(),
-            _buildLeave(),
-            SpaceUtil.verticalDefault(),
-            _buildUnavailability(),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildWorkingShift() {
+  Widget _buildTotal() {
     return ButtonCustomWidget(
-      margin: EdgeInsets.only(
-        bottom: 20,
-      ),
-      color: Get.theme.primaryColor,
-      padding: EdgeInsets.all(20),
-      alignment: Alignment.centerLeft,
+      margin: EdgeInsets.all(0),
+      padding: EdgeInsets.all(10),
       onPressed: () {
-        // Get.toNamed(
-        //   RouteUtil.SHIFT_DETAIL,
-        //   arguments: 'Sắp tới',
-        // );
+        Get.toNamed(RouteUtil.TIMESHEET);
       },
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Ca làm: 14:00 - 19:00',
-                style: Get.textTheme.bodyText1.copyWith(
-                  color: ColorUtil.WHITE,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Icon(
-                FontAwesomeIcons.solidClock,
-                color: ColorUtil.WHITE,
-              ),
-            ],
-          ),
-          SpaceUtil.verticalSmall(),
-          IconTextCustomWidget(
-            icon: FontAwesomeIcons.mapMarkerAlt,
-            text: 'Passio Coffee FPTU',
-            color: ColorUtil.WHITE,
-          ),
-          SpaceUtil.verticalSmall(),
-          IconTextCustomWidget(
-            icon: FontAwesomeIcons.tag,
-            text: 'Pha chế',
-            color: ColorUtil.WHITE,
-          ),
-          Divider(
-            color: ColorUtil.WHITE,
-            thickness: 2,
-          ),
-          Text(
-            'Điểm danh:',
-            style: Get.textTheme.bodyText1.copyWith(
-              color: ColorUtil.WHITE,
-              fontWeight: FontWeight.bold,
+          CircleAvatarCustomWidget(
+            child: Icon(
+              FontAwesomeIcons.clock,
+              color: Get.theme.primaryColor,
+              size: 20,
             ),
           ),
-          Row(
-            children: [
-              ContainerCustomWidget(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 5,
-                  vertical: 2,
-                ),
-                margin: EdgeInsets.all(5),
-                radius: 30,
-                child: Text(
-                  '13:55',
+          SpaceUtil.horizontalDefault(),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Tổng giờ công tuần này:',
                   style: Get.textTheme.button,
                 ),
-              ),
-              ContainerCustomWidget(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 5,
-                  vertical: 2,
+                Text(
+                  '24 giờ 23 phút',
+                  style: Get.textTheme.bodyText2,
                 ),
-                margin: EdgeInsets.all(5),
-                radius: 30,
-                child: Text(
-                  '14:00',
-                  style: Get.textTheme.button,
-                ),
-              ),
-              ContainerCustomWidget(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 5,
-                  vertical: 2,
-                ),
-                margin: EdgeInsets.all(5),
-                radius: 30,
-                child: Text(
-                  '14:05',
-                  style: Get.textTheme.button,
-                ),
-              ),
-            ],
+              ],
+            ),
+          ),
+          Icon(
+            FontAwesomeIcons.chevronRight,
+            color: Get.theme.primaryColor,
           ),
         ],
       ),
     );
   }
 
-  Widget _buildUnavailability() {
+  Widget _buildAttendance() {
     return ButtonCustomWidget(
-      padding: EdgeInsets.all(0),
       margin: EdgeInsets.all(0),
+      padding: EdgeInsets.all(10),
       onPressed: () {},
-      child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.calendarTimes,
-          color: Get.theme.primaryColor,
-        ),
-        title: Text(
-          'Ngày không thể làm',
-          style: Get.textTheme.button,
-        ),
-        trailing: Icon(
-          FontAwesomeIcons.chevronRight,
-          color: Get.theme.primaryColor,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildLeave() {
-    return ButtonCustomWidget(
-      padding: EdgeInsets.all(0),
-      margin: EdgeInsets.all(0),
-      onPressed: () {},
-      child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.calendarMinus,
-          color: Get.theme.primaryColor,
-        ),
-        title: Text(
-          'Xin nghỉ',
-          style: Get.textTheme.button,
-        ),
-        trailing: Icon(
-          FontAwesomeIcons.chevronRight,
-          color: Get.theme.primaryColor,
-        ),
-      ),
-    );
-  }
-
-  Widget _buildUpcomingShift() {
-    return ButtonCustomWidget(
-      padding: EdgeInsets.all(0),
-      margin: EdgeInsets.all(0),
-      onPressed: () {},
-      child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.calendarAlt,
-          color: Get.theme.primaryColor,
-        ),
-        title: Text(
-          'Ca sắp làm',
-          style: Get.textTheme.button,
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ContainerCustomWidget(
-              isUp: false,
-              boxShape: NeumorphicBoxShape.circle(),
-              padding: EdgeInsets.all(10),
-              child: Text(
-                '1',
-                style: Get.textTheme.button,
-              ),
+      child: Row(
+        children: [
+          CircleAvatarCustomWidget(
+            child: Icon(
+              FontAwesomeIcons.calendarCheck,
+              color: Get.theme.accentColor,
+              size: 20,
             ),
-            SpaceUtil.horizontalDefault(),
-            Icon(
-              FontAwesomeIcons.chevronRight,
-              color: Get.theme.primaryColor,
+          ),
+          SpaceUtil.horizontalDefault(),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Lần cuối điểm danh:',
+                  style: Get.textTheme.button,
+                ),
+                Text(
+                  'Today - 14:00',
+                  style: Get.textTheme.bodyText2,
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Icon(
+            FontAwesomeIcons.chevronRight,
+            color: Get.theme.primaryColor,
+          ),
+        ],
       ),
     );
   }
@@ -225,82 +123,132 @@ class _HomePageState extends State<HomePage> {
   Widget _buildAvailableShift() {
     return ButtonCustomWidget(
       margin: EdgeInsets.all(0),
-      padding: EdgeInsets.all(0),
-      onPressed: () {},
-      child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.calendarPlus,
-          color: Get.theme.primaryColor,
-        ),
-        title: Text(
-          'Ca còn trống',
-          style: Get.textTheme.button,
-        ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ContainerCustomWidget(
-              isUp: false,
-              boxShape: NeumorphicBoxShape.circle(),
-              padding: EdgeInsets.all(10),
-              child: Text(
-                '3',
-                style: Get.textTheme.button,
-              ),
+      padding: EdgeInsets.all(10),
+      alignment: Alignment.centerLeft,
+      onPressed: () {
+        Get.toNamed(
+          RouteUtil.SHIFT_DETAIL,
+        );
+      },
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Ca còn trống',
+                  style: Get.textTheme.bodyText1.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconTextCustomWidget(
+                  icon: FontAwesomeIcons.calendar,
+                  text: '20 Jun 2021, 14:00 - 19:00',
+                  iconColor: ColorUtil.BLUE1,
+                ),
+                IconTextCustomWidget(
+                  icon: FontAwesomeIcons.mapMarkerAlt,
+                  text: 'Passio Coffee FPTU',
+                  iconColor: ColorUtil.BLUE2,
+                ),
+                IconTextCustomWidget(
+                  icon: FontAwesomeIcons.tag,
+                  text: 'Pha chế',
+                  iconColor: ColorUtil.BLUE3,
+                ),
+              ],
             ),
-            SpaceUtil.horizontalDefault(),
-            Icon(
-              FontAwesomeIcons.chevronRight,
-              color: Get.theme.primaryColor,
-            ),
-          ],
-        ),
+          ),
+          Icon(
+            FontAwesomeIcons.chevronRight,
+            color: Get.theme.primaryColor,
+          ),
+        ],
       ),
     );
   }
 
-  Widget _buildTimesheets() {
+  Widget _buildUpcomingShift() {
     return ButtonCustomWidget(
-      padding: EdgeInsets.all(0),
       margin: EdgeInsets.all(0),
-      onPressed: () {},
-      child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.calendarCheck,
-          color: Get.theme.primaryColor,
-        ),
-        title: Text(
-          'Xem điểm danh',
-          style: Get.textTheme.button,
-        ),
-        trailing: Icon(
-          FontAwesomeIcons.chevronRight,
-          color: Get.theme.primaryColor,
-        ),
+      padding: EdgeInsets.all(10),
+      alignment: Alignment.centerLeft,
+      onPressed: () {
+        Get.toNamed(
+          RouteUtil.SHIFT_DETAIL,
+        );
+      },
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Ca tiếp theo:',
+                  style: Get.textTheme.bodyText1.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                IconTextCustomWidget(
+                  icon: FontAwesomeIcons.calendar,
+                  text: 'Today 14:00 - 19:00',
+                  iconColor: ColorUtil.BLUE1,
+                ),
+                IconTextCustomWidget(
+                  icon: FontAwesomeIcons.mapMarkerAlt,
+                  text: 'Passio Coffee FPTU',
+                  iconColor: ColorUtil.BLUE2,
+                ),
+                IconTextCustomWidget(
+                  icon: FontAwesomeIcons.tag,
+                  text: 'Pha chế',
+                  iconColor: ColorUtil.BLUE3,
+                ),
+              ],
+            ),
+          ),
+          Icon(
+            FontAwesomeIcons.chevronRight,
+            color: Get.theme.primaryColor,
+          ),
+        ],
       ),
     );
   }
 
   Widget _buildInfo() {
-    return ListTile(
-      leading: ContainerCustomWidget(
-        boxShape: NeumorphicBoxShape.circle(),
-        padding: EdgeInsets.all(10),
-        color: Get.theme.primaryColor,
-        child: Icon(
-          Icons.person,
-          color: ColorUtil.WHITE,
-        ),
-      ),
-      title: Text(
-        'Tony Staff',
-        style: Get.textTheme.headline6,
-      ),
-      subtitle: Text(
-        'I am Tony Staff',
-        style: Get.textTheme.bodyText2,
-      ),
-      contentPadding: EdgeInsets.all(0),
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        Widget title = SizedBox();
+        if (state.loadStatus == LoadUserStatus.loadingSuccessful) {
+          title = Text(
+            '${state.userModel.firstName} ${state.userModel.lastName}',
+            style: Get.textTheme.headline6,
+          );
+        } else if (state.loadStatus == LoadUserStatus.loading) {
+          title = ProgressingCustomWidget(
+            type: ProcessingType.text,
+          );
+        }
+
+        return ListTile(
+          leading: ContainerCustomWidget(
+            boxShape: NeumorphicBoxShape.circle(),
+            padding: EdgeInsets.all(10),
+            color: Get.theme.primaryColor,
+            child: Icon(
+              Icons.person,
+              color: ColorUtil.WHITE,
+            ),
+          ),
+          title: title,
+          contentPadding: EdgeInsets.all(0),
+        );
+      },
     );
   }
 }

@@ -1,27 +1,49 @@
 import 'package:equatable/equatable.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:sts/models/jwt_model.dart';
 
 class AuthenticationModel extends Equatable {
   final int status;
   final String username;
   final String token;
+  final JwtModel tokenDecode;
   final String message;
 
-  const AuthenticationModel(
-      {this.status, this.username, this.token, this.message});
+  const AuthenticationModel({
+    this.status,
+    this.username,
+    this.token,
+    this.message,
+    this.tokenDecode,
+  });
 
   static const empty = AuthenticationModel(
     status: 0,
     token: '',
     username: '',
     message: '',
+    tokenDecode: JwtModel(),
   );
 
   factory AuthenticationModel.fromJson(Map<String, dynamic> json) {
+    String token = json['token'] ?? '';
     return AuthenticationModel(
-      status: json['status'] as int,
-      username: json['username'] as String,
-      token: json['token'] as String,
+      status: json['status'] ?? 0,
+      username: json['username'] ?? '',
+      token: token,
       message: json['message'] ?? '',
+      tokenDecode: JwtModel.fromToken(token),
+    );
+  }
+
+  factory AuthenticationModel.fromToken(String token) {
+    JwtModel tokenDecode = JwtModel.fromJson(JwtDecoder.decode(token));
+    return AuthenticationModel(
+      status: 200,
+      username: tokenDecode.nameid,
+      token: token,
+      message: '',
+      tokenDecode: tokenDecode,
     );
   }
 
@@ -37,11 +59,15 @@ class AuthenticationModel extends Equatable {
     int status,
     String username,
     String token,
+    String message,
   }) {
+    String tok = token ?? this.token;
     return AuthenticationModel(
       status: status ?? this.status,
       username: username ?? this.username,
-      token: token ?? this.token,
+      token: tok,
+      message: message ?? this.message,
+      tokenDecode: JwtModel.fromJson(JwtDecoder.decode(tok)),
     );
   }
 
@@ -54,5 +80,6 @@ class AuthenticationModel extends Equatable {
         username,
         token,
         message,
+        tokenDecode,
       ];
 }

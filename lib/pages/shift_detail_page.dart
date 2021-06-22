@@ -3,14 +3,11 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:sts/custom_widget/app_bar_custom_widget.dart';
-import 'package:sts/custom_widget/back_button_custom_widget.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
 import 'package:sts/custom_widget/icon_text_custom_widget.dart';
-import 'package:sts/custom_widget/shift_status_custom_widget.dart';
 import 'package:sts/custom_widget/time_working_custom_widget.dart';
 import 'package:sts/utils/color_util.dart';
-import 'package:sts/utils/gradient_util.dart';
 import 'package:sts/utils/space_util.dart';
 
 class ShiftDetailPage extends StatelessWidget {

@@ -16,15 +16,16 @@ class BackButtonCustomWidget extends StatelessWidget {
       onPressed: () {
         Get.back();
       },
-      margin: EdgeInsets.all(0),
+      color: Get.theme.primaryColor,
+      margin: EdgeInsets.symmetric(vertical: 5),
       padding: EdgeInsets.all(10),
       boxShape: NeumorphicBoxShape.circle(),
       child: Icon(
         isFullscreenDialog
             ? FontAwesomeIcons.times
             : FontAwesomeIcons.chevronLeft,
-        color: Get.theme.primaryColor,
-        size: 24,
+        color: Get.theme.backgroundColor,
+        size: 20,
       ),
     );
   }

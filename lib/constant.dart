@@ -1,4 +1,5 @@
 import 'package:connectivity/connectivity.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'repository/api_client.dart';
 
@@ -7,3 +8,7 @@ Connectivity connectivity = Connectivity();
 ApiClient apiClient = ApiClient();
 
 const int REQUEST_TIME_OUT = 10000; // milliseconds
+
+const String ROLE = 'staff';
+
+const FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();

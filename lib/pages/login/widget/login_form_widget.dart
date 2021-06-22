@@ -6,9 +6,6 @@ import 'package:sts/custom_widget/full_screen_progressing_custom_widget.dart';
 import 'package:sts/custom_widget/text_field_custom_widget.dart';
 import 'package:sts/pages/login/cubit/login_cubit.dart';
 import 'package:formz/formz.dart';
-import 'package:sts/utils/color_util.dart';
-import 'package:sts/utils/gradient_util.dart';
-import 'package:sts/utils/space_util.dart';
 import 'package:sts/utils/string_util.dart';
 
 class LoginForm extends StatelessWidget {
@@ -17,38 +14,40 @@ class LoginForm extends StatelessWidget {
     return Column(
       children: [
         _usernameInput(),
-        SpaceUtil.verticalDefault(),
         _passwordInput(),
-        SpaceUtil.verticalSmall(),
-        Container(
-          alignment: Alignment.center,
-          height: 20,
-          child: BlocBuilder<LoginCubit, LoginState>(
-            buildWhen: (previous, current) => previous.status != current.status,
-            builder: (context, state) {
-              if (state.status.isSubmissionFailure) {
-                return Text(
-                  state.message,
-                  style: Get.textTheme.bodyText1.copyWith(
-                    color: Colors.red,
-                  ),
-                );
-              } else if (state.status.isSubmissionSuccess) {
-                return Text(
-                  'Login Successful!',
-                  style: Get.textTheme.bodyText1.copyWith(
-                    color: Colors.green,
-                  ),
-                );
-              }
-              return Text(
-                '',
-              );
-            },
-          ),
-        ),
+        _buildErrorText(),
         _loginButton(),
       ],
+    );
+  }
+
+  Widget _buildErrorText() {
+    return Container(
+      alignment: Alignment.center,
+      height: 20,
+      child: BlocBuilder<LoginCubit, LoginState>(
+        buildWhen: (previous, current) => previous.status != current.status,
+        builder: (context, state) {
+          if (state.status.isSubmissionFailure) {
+            return Text(
+              state.message,
+              style: Get.textTheme.bodyText1.copyWith(
+                color: Colors.red,
+              ),
+            );
+          } else if (state.status.isSubmissionSuccess) {
+            return Text(
+              'Login Successful!',
+              style: Get.textTheme.bodyText1.copyWith(
+                color: Colors.green,
+              ),
+            );
+          }
+          return Text(
+            '',
+          );
+        },
+      ),
     );
   }
 

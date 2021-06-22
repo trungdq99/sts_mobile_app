@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:sts/custom_widget/app_bar_custom_widget.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
 import 'package:sts/custom_widget/icon_text_custom_widget.dart';
@@ -13,22 +14,30 @@ class PeoplePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        padding: EdgeInsets.all(20),
-        child: Column(
-          children: [
-            _buildPerson(
-              name: 'Tony Staff',
-              location: 'Passio Coffee FPTU',
-              position: 'Pha chế',
-            ),
-            _buildPerson(
-              name: 'Staff',
-              location: 'Passio Coffee FPTU',
-              position: 'Phục vụ',
-            ),
-          ],
+    return Scaffold(
+      appBar: AppBarCustomWidget(
+        title: Text(
+          'Mọi người',
+          style: Get.textTheme.headline6,
+        ),
+      ),
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              _buildPerson(
+                name: 'Tony Staff',
+                location: 'Passio Coffee FPTU',
+                position: 'Pha chế',
+              ),
+              _buildPerson(
+                name: 'Staff',
+                location: 'Passio Coffee FPTU',
+                position: 'Phục vụ',
+              ),
+            ],
+          ),
         ),
       ),
     );

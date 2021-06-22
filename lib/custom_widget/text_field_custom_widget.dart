@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
 import 'package:sts/utils/color_util.dart';
-import 'package:sts/utils/neumorphic_style_util.dart';
+import 'package:sts/utils/space_util.dart';
 
 class TextFieldCustomWidget extends StatefulWidget {
   final TextEditingController controller;
@@ -25,6 +25,8 @@ class TextFieldCustomWidget extends StatefulWidget {
   final int minLines;
   final int maxLines;
   final String errorText;
+  final bool showError;
+
   TextFieldCustomWidget({
     this.controller,
     this.prefixIcon,
@@ -44,6 +46,7 @@ class TextFieldCustomWidget extends StatefulWidget {
     this.minLines,
     this.maxLines,
     this.errorText: '',
+    this.showError: false,
   });
   @override
   _TextFieldCustomWidgetState createState() => _TextFieldCustomWidgetState();
@@ -131,18 +134,19 @@ class _TextFieldCustomWidgetState extends State<TextFieldCustomWidget> {
             ),
           ),
         ),
-        widget.errorText != null && widget.errorText.isNotEmpty
-            ? Padding(
-                padding: widget.margin,
-                child: Text(
+        Container(
+          padding: widget.margin,
+          height: SpaceUtil.SPACE_DEFAULT,
+          child: widget.errorText != null && widget.errorText.isNotEmpty
+              ? Text(
                   widget.errorText,
                   style: Get.textTheme.bodyText2.copyWith(
                     color: Colors.red,
                     fontStyle: FontStyle.italic,
                   ),
-                ),
-              )
-            : SizedBox(),
+                )
+              : SizedBox(),
+        ),
       ],
     );
   }

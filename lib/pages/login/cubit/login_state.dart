@@ -14,7 +14,12 @@ class LoginState extends Equatable {
   final String message;
 
   @override
-  List<Object> get props => [username, password, status, message,];
+  List<Object> get props => [
+        username,
+        password,
+        status,
+        message,
+      ];
 
   LoginState copyWith({
     UsernameFormzInput username,
@@ -26,7 +31,7 @@ class LoginState extends Equatable {
       username: username ?? this.username,
       password: password ?? this.password,
       status: status ?? this.status,
-      message: message??this.message,
+      message: message ?? this.message,
     );
   }
 }

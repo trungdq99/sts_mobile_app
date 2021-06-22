@@ -24,12 +24,6 @@ class ApiClient extends GetConnect {
     if (await FunctionUtil.checkConnection()) {
       print('Call api: ${UrlUtil.BASE_URL}/$api');
       print('Method: $method');
-      // if(header != null && header.isNotEmpty){
-      //   print(header.toString());
-      // }
-      // if(body != null && !body.isBlank){
-      //   print(body.toString());
-      // }
       Response response;
 
       if (method == RequestMethod.GET) {
@@ -88,7 +82,7 @@ class ApiClient extends GetConnect {
       print('Status: ${response?.statusCode}');
       print('Response: ${response?.body}');
       return response;
-    }else{
+    } else {
       throw Exception(ResponseStatusUtil.NO_CONNECTION);
     }
   }

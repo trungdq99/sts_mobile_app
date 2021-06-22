@@ -6,7 +6,6 @@ import 'package:intl/intl.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
 import 'package:sts/pages/main/tab/schedule/cubit/calendar_cubit.dart';
 import 'package:sts/utils/color_util.dart';
-import 'package:sts/utils/gradient_util.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class CalendarWidget extends StatelessWidget {

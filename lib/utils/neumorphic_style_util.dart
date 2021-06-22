@@ -13,11 +13,9 @@ class NeumorphicStyleUtil {
   }) {
     return NeumorphicStyle(
       border: NeumorphicBorder(
-        color: ColorUtil.GREY.withOpacity(0.1),
-        width: 0.1,
-        isEnabled: true,
+        isEnabled: false,
       ),
-      intensity: 0.7,
+      intensity: 0.5,
       surfaceIntensity: 1,
       boxShape: boxShape ??
           NeumorphicBoxShape.roundRect(BorderRadius.circular(radius ?? 0)),
@@ -25,7 +23,7 @@ class NeumorphicStyleUtil {
       shadowDarkColor: shadowDarkColor ?? ColorUtil.DARK_SHADOW,
       shadowLightColor: shadowLightColor ?? ColorUtil.LIGHT_SHADOW,
       lightSource: lightSource,
-      depth: 5,
+      depth: 10,
     );
   }
 

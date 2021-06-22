@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:sts/blocs/authentication/authentication_bloc.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
+import 'package:sts/custom_widget/circle_avatar_custom_widget.dart';
 import 'package:sts/custom_widget/icon_text_custom_widget.dart';
 import 'package:sts/utils/color_util.dart';
 import 'package:sts/utils/route_util.dart';
@@ -30,6 +31,16 @@ class _ProfilePageState extends State<ProfilePage> {
             SpaceUtil.verticalSmall(),
             _buildRank(),
             SpaceUtil.verticalDefault(),
+            _buildUpcomingShift(),
+            SpaceUtil.verticalDefault(),
+            _buildAvailableShift(),
+            SpaceUtil.verticalDefault(),
+            _buildTimesheets(),
+            SpaceUtil.verticalBig(),
+            _buildLeave(),
+            SpaceUtil.verticalDefault(),
+            _buildUnavailability(),
+            SpaceUtil.verticalBig(),
             _buildEditProfileButton(),
             SpaceUtil.verticalDefault(),
             _buildJobInfoButton(),
@@ -38,6 +49,170 @@ class _ProfilePageState extends State<ProfilePage> {
             SpaceUtil.verticalDefault(),
             _buildLogoutButton(),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUnavailability() {
+    return ButtonCustomWidget(
+      padding: EdgeInsets.all(0),
+      margin: EdgeInsets.all(0),
+      onPressed: () {},
+      child: ListTile(
+        leading: CircleAvatarCustomWidget(
+          color: ColorUtil.BLUE2,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            FontAwesomeIcons.calendarTimes,
+            color: Get.theme.backgroundColor,
+          ),
+        ),
+        title: Text(
+          'Ngày không thể làm',
+          style: Get.textTheme.button,
+        ),
+        trailing: Icon(
+          FontAwesomeIcons.chevronRight,
+          color: Get.theme.primaryColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildLeave() {
+    return ButtonCustomWidget(
+      padding: EdgeInsets.all(0),
+      margin: EdgeInsets.all(0),
+      onPressed: () {},
+      child: ListTile(
+        leading: CircleAvatarCustomWidget(
+          color: ColorUtil.BLUE2,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            FontAwesomeIcons.calendarMinus,
+            color: Get.theme.backgroundColor,
+          ),
+        ),
+        title: Text(
+          'Xin nghỉ',
+          style: Get.textTheme.button,
+        ),
+        trailing: Icon(
+          FontAwesomeIcons.chevronRight,
+          color: Get.theme.primaryColor,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildUpcomingShift() {
+    return ButtonCustomWidget(
+      padding: EdgeInsets.all(0),
+      margin: EdgeInsets.all(0),
+      onPressed: () {},
+      child: ListTile(
+        leading: CircleAvatarCustomWidget(
+          color: ColorUtil.BLUE1,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            FontAwesomeIcons.calendarAlt,
+            color: Get.theme.backgroundColor,
+          ),
+        ),
+        title: Text(
+          'Ca sắp làm',
+          style: Get.textTheme.button,
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ContainerCustomWidget(
+              isUp: false,
+              boxShape: NeumorphicBoxShape.circle(),
+              padding: EdgeInsets.all(10),
+              child: Text(
+                '1',
+                style: Get.textTheme.button.copyWith(
+                  color: ColorUtil.ORANGE,
+                ),
+              ),
+            ),
+            SpaceUtil.horizontalDefault(),
+            Icon(
+              FontAwesomeIcons.chevronRight,
+              color: Get.theme.primaryColor,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildAvailableShift() {
+    return ButtonCustomWidget(
+      margin: EdgeInsets.all(0),
+      padding: EdgeInsets.all(0),
+      onPressed: () {},
+      child: ListTile(
+        leading: CircleAvatarCustomWidget(
+          color: ColorUtil.BLUE1,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            FontAwesomeIcons.calendarPlus,
+            color: Get.theme.backgroundColor,
+          ),
+        ),
+        title: Text(
+          'Ca còn trống',
+          style: Get.textTheme.button,
+        ),
+        trailing: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            ContainerCustomWidget(
+              isUp: false,
+              boxShape: NeumorphicBoxShape.circle(),
+              padding: EdgeInsets.all(10),
+              child: Text(
+                '3',
+                style: Get.textTheme.button.copyWith(
+                  color: ColorUtil.ORANGE,
+                ),
+              ),
+            ),
+            SpaceUtil.horizontalDefault(),
+            Icon(
+              FontAwesomeIcons.chevronRight,
+              color: Get.theme.primaryColor,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTimesheets() {
+    return ButtonCustomWidget(
+      padding: EdgeInsets.all(0),
+      margin: EdgeInsets.all(0),
+      onPressed: () {},
+      child: ListTile(
+        leading: CircleAvatarCustomWidget(
+          color: ColorUtil.BLUE1,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            FontAwesomeIcons.calendarCheck,
+            color: Get.theme.backgroundColor,
+          ),
+        ),
+        title: Text(
+          'Xem điểm danh',
+          style: Get.textTheme.button,
+        ),
+        trailing: Icon(
+          FontAwesomeIcons.chevronRight,
+          color: Get.theme.primaryColor,
         ),
       ),
     );
@@ -66,13 +241,17 @@ class _ProfilePageState extends State<ProfilePage> {
         Get.toNamed(RouteUtil.CHANGE_PASSWORD);
       },
       child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.lock,
-          color: Get.theme.primaryColor,
+        leading: CircleAvatarCustomWidget(
+          color: ColorUtil.BLUE3,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            FontAwesomeIcons.lock,
+            color: Get.theme.backgroundColor,
+          ),
         ),
         title: Text(
           'Đổi mật khẩu',
-          style: Get.textTheme.button.copyWith(),
+          style: Get.textTheme.button,
         ),
         trailing: Icon(
           FontAwesomeIcons.chevronRight,
@@ -91,15 +270,17 @@ class _ProfilePageState extends State<ProfilePage> {
         Get.toNamed(RouteUtil.JOB_INFO);
       },
       child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.briefcase,
-          color: Get.theme.primaryColor,
+        leading: CircleAvatarCustomWidget(
+          color: ColorUtil.BLUE3,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            FontAwesomeIcons.briefcase,
+            color: Get.theme.backgroundColor,
+          ),
         ),
         title: Text(
           'Thông tin công việc',
-          style: Get.textTheme.button.copyWith(
-            color: Get.theme.primaryColor,
-          ),
+          style: Get.textTheme.button,
         ),
         trailing: Icon(
           FontAwesomeIcons.chevronRight,
@@ -118,15 +299,17 @@ class _ProfilePageState extends State<ProfilePage> {
         Get.toNamed(RouteUtil.EDIT_PROFILE);
       },
       child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.solidUser,
-          color: Get.theme.primaryColor,
+        leading: CircleAvatarCustomWidget(
+          color: ColorUtil.BLUE3,
+          padding: EdgeInsets.all(5),
+          child: Icon(
+            FontAwesomeIcons.solidUser,
+            color: Get.theme.backgroundColor,
+          ),
         ),
         title: Text(
           'Chỉnh sửa thông tin',
-          style: Get.textTheme.button.copyWith(
-            color: Get.theme.primaryColor,
-          ),
+          style: Get.textTheme.button,
         ),
         trailing: Icon(
           FontAwesomeIcons.chevronRight,

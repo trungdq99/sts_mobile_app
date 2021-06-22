@@ -10,22 +10,20 @@ class UserModel extends Equatable {
   final bool gender;
   final String address;
   final dynamic photoUrl;
-  final int roleId;
-  final dynamic role;
 
   const UserModel({
-    this.username,
-    this.email,
-    this.firstName,
-    this.lastName,
-    this.dob,
-    this.phone,
+    this.username: '',
+    this.email: '',
+    this.firstName: '',
+    this.lastName: '',
+    this.dob: '',
+    this.phone: '',
     this.gender,
-    this.address,
-    this.photoUrl,
-    this.roleId,
-    this.role,
+    this.address: '',
+    this.photoUrl: '',
   });
+
+  static const empty = UserModel();
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -38,8 +36,6 @@ class UserModel extends Equatable {
       gender: json['gender'],
       address: json['address'] as String,
       photoUrl: json['photoUrl'],
-      roleId: json['roleId'] as int,
-      role: json['role'],
     );
   }
 
@@ -54,8 +50,6 @@ class UserModel extends Equatable {
       'gender': gender,
       'address': address,
       'photoUrl': photoUrl,
-      'roleId': roleId,
-      'role': role,
     };
   }
 
@@ -71,8 +65,6 @@ class UserModel extends Equatable {
     bool gender,
     String address,
     dynamic photoUrl,
-    int roleId,
-    dynamic role,
   }) {
     return UserModel(
       username: username ?? this.username,
@@ -84,8 +76,6 @@ class UserModel extends Equatable {
       gender: gender ?? this.gender,
       address: address ?? this.address,
       photoUrl: photoUrl ?? this.photoUrl,
-      roleId: roleId ?? this.roleId,
-      role: role ?? this.role,
     );
   }
 
@@ -104,8 +94,6 @@ class UserModel extends Equatable {
       gender,
       address,
       photoUrl,
-      roleId,
-      role,
     ];
   }
 }

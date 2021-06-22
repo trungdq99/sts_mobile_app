@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
 import 'package:sts/custom_widget/progressing_custom_widget.dart';
-import 'package:sts/utils/color_util.dart';
-import 'package:sts/utils/gradient_util.dart';
 
 class FullScreenProgressingCustomWidget extends StatelessWidget {
   @override
@@ -16,10 +14,7 @@ class FullScreenProgressingCustomWidget extends StatelessWidget {
           height: 100,
           margin: EdgeInsets.all(20),
           child: ContainerCustomWidget(
-            gradient: GradientUtil.topBottom(),
-            child: ProgressingCustomWidget(
-              color: ColorUtil.WHITE,
-            ),
+            child: ProgressingCustomWidget(),
           ),
         ),
         // child: Neumorphic(

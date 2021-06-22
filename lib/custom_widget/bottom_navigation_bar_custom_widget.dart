@@ -4,9 +4,6 @@ import 'package:get/get.dart';
 import 'package:sts/cubits/selected_index_cubit.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
 import 'package:sts/utils/color_util.dart';
-import 'package:sts/utils/gradient_util.dart';
-
-import 'button_custom_widget.dart';
 
 class BottomItem {
   final IconData icon;
@@ -103,7 +100,6 @@ class _BottomNavigationBarCustomWidgetState
               mainAxisSize: MainAxisSize.min,
               children: [
                 ContainerCustomWidget(
-                  // onPressed: () => onPressed(index),
                   radius: 5,
                   isUp: state != index,
                   width: 40,
@@ -121,6 +117,9 @@ class _BottomNavigationBarCustomWidgetState
                   style: Get.textTheme.bodyText2.copyWith(
                     fontWeight:
                         state == index ? FontWeight.bold : FontWeight.normal,
+                    // color: state == index
+                    //     ? Get.theme.accentColor
+                    //     : Get.theme.primaryColor,
                   ),
                 ),
               ],
@@ -129,41 +128,5 @@ class _BottomNavigationBarCustomWidgetState
         );
       },
     );
-    // return InkWell(
-    //   onTap: () => onPressed(index),
-    //   child: BlocBuilder<SelectedIndexCubit, int>(
-    //     builder: (context, state) {
-    //       return SafeArea(
-    //         child: Container(
-    //           width: context.width / 3 - 40,
-    //           // height: context.width / 3 - 40,
-    //           margin: EdgeInsets.symmetric(vertical: 5),
-    //           child: Column(
-    //             mainAxisSize: MainAxisSize.min,
-    //             children: [
-    //               Icon(
-    //                 item.icon,
-    //                 color: ColorUtil.WHITE,
-    //                 size: state == index ? 24 : 20,
-    //               ),
-    //               SizedBox(
-    //                 height: 5,
-    //               ),
-    //               Text(
-    //                 item.label,
-    //                 style: TextStyle(
-    //                   color: ColorUtil.WHITE,
-    //                   fontSize: state == index ? 12 : 10,
-    //                   fontWeight:
-    //                       state == index ? FontWeight.bold : FontWeight.normal,
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       );
-    //     },
-    //   ),
-    // );
   }
 }

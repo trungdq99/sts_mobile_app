@@ -6,5 +6,7 @@ import 'repository/authentication_repository.dart';
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   final authenticationRepository = AuthenticationRepository();
-  runApp(App(authenticationRepository: authenticationRepository,));
+  runApp(App(
+    authenticationRepository: authenticationRepository,
+  ));
 }

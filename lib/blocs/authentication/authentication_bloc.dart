@@ -1,14 +1,9 @@
 import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:sts/models/authentication_model.dart';
 import 'package:sts/repository/authentication_repository.dart';
-import 'package:sts/utils/response_status_util.dart';
-
-import '../../constant.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -55,7 +50,6 @@ class AuthenticationBloc
     if (event.authenticationModel == AuthenticationModel.empty) {
       yield AuthenticationState.unauthenticated();
     } else {
-      _saveToken(event.authenticationModel.token);
       yield AuthenticationState.authenticated(
           authenticationModel: event.authenticationModel);
     }
@@ -68,38 +62,16 @@ class AuthenticationBloc
     } catch (e) {
       print('Error at: AuthenticationBloc - _mapLogoutToState: $e');
     }
-    _removeToken();
-    yield AuthenticationState.unauthenticated();
   }
 
   Stream<AuthenticationState> _mapLoadPreviousLoginToState(
       AuthenticationEventLoadPreviousLogin event) async* {
-    String token;
-    token = await _loadToken();
     await Future.delayed(Duration(milliseconds: 1000));
     try {
-      AuthenticationModel authenticationModel;
-      if (token != null && token.isNotEmpty) {
-        print('Token: $token');
-        authenticationModel = AuthenticationModel(
-          status: 200,
-          token: token,
-          username: 'hello',
-        );
-      }
-      if (authenticationModel != null) {
-        yield AuthenticationState.authenticated(
-          authenticationModel: authenticationModel,
-        );
-      } else {
-        yield AuthenticationState.unauthenticated();
-      }
+      await _authenticationRepository.loadPreviousLogin();
     } catch (e) {
-      print('Error at: AuthenticationBloc - _mapLoadPreviousLoginToState: $e');
-      if (e.toString() == 'Exception: ${ResponseStatusUtil.UNAUTHENTICATED}') {
-        yield AuthenticationState.unauthenticated();
-        _removeToken();
-      }
+      print(
+          'AuthenticationBloc - _mapLoadPreviousLoginToState: ${e.toString()}');
     }
   }
 
@@ -168,21 +140,6 @@ class AuthenticationBloc
   //     _removeToken();
   //   }
   // }
-
-  _saveToken(String token) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(TOKEN_KEY, token);
-  }
-
-  _removeToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove(TOKEN_KEY);
-  }
-
-  Future<String> _loadToken() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(TOKEN_KEY);
-  }
 
   // Future<AuthenticationModel> login({
   //   @required String username,

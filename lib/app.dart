@@ -2,8 +2,10 @@ import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:sts/blocs/user/user_bloc.dart';
 import 'package:sts/custom_widget/notification_dialog_custom_widget.dart';
 import 'package:sts/pages/splash_page.dart';
+import 'package:sts/repository/user_repository.dart';
 import 'package:sts/utils/color_util.dart';
 import 'package:sts/utils/function_util.dart';
 import 'package:sts/utils/route_util.dart';
@@ -30,7 +32,12 @@ class App extends StatelessWidget {
             ),
           ),
           BlocProvider(
-            create: (context) => InternetConnectionCubit(),
+            create: (_) => InternetConnectionCubit(),
+          ),
+          BlocProvider(
+            create: (_) => UserBloc(
+              userRepository: UserRepository(),
+            ),
           ),
         ],
         child: AppView(),
@@ -54,34 +61,34 @@ class AppView extends StatelessWidget {
         backgroundColor: ColorUtil.WHITE,
         scaffoldBackgroundColor: ColorUtil.WHITE,
         primaryColor: ColorUtil.BLUE,
-        accentColor: ColorUtil.BLUE2,
+        accentColor: ColorUtil.ORANGE,
         buttonColor: ColorUtil.WHITE,
         fontFamily: 'Aileron',
         textTheme: TextTheme(
           button: TextStyle(
-            color: ColorUtil.BLUE,
+            color: ColorUtil.BLACK,
             fontWeight: FontWeight.bold,
             fontSize: 14,
           ),
           bodyText1: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.normal,
-            color: ColorUtil.BLUE,
+            color: ColorUtil.BLACK,
           ),
           bodyText2: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.normal,
-            color: ColorUtil.BLUE,
+            color: ColorUtil.BLACK,
           ),
           headline1: TextStyle(
             fontSize: 60.0,
             fontWeight: FontWeight.bold,
-            color: ColorUtil.BLUE,
+            color: ColorUtil.BLACK,
           ),
           headline6: TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
-            color: ColorUtil.BLUE,
+            color: ColorUtil.BLACK,
           ),
         ),
       ),
@@ -93,6 +100,7 @@ class AppView extends StatelessWidget {
                 listener: (context, state) {
                   switch (state.status) {
                     case AuthenticationStatus.authenticated:
+                      context.read<UserBloc>().add(UserEventLoad());
                       Get.offAllNamed(RouteUtil.MAIN);
                       break;
                     case AuthenticationStatus.unauthenticated:

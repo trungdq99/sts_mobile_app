@@ -8,8 +8,6 @@ class UsernameFormzInput extends FormzInput<String, UsernameValidationError> {
 
   @override
   UsernameValidationError validator(String value) {
-    return value.isNotEmpty
-        ? null
-        : UsernameValidationError.invalid;
+    return value.isNotEmpty ? null : UsernameValidationError.invalid;
   }
 }
