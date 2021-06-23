@@ -57,6 +57,7 @@ class AuthenticationRepository {
 
         // Save token to local
         FunctionUtil.saveToken(authenticationModel.token);
+        apiClient.setToken(authenticationModel.token);
       } else {
         // Throw Role error if User doesn't login with Staff role
         throw Exception(StringUtil.ROLE_ERROR);
@@ -80,6 +81,7 @@ class AuthenticationRepository {
       if (FunctionUtil.checkToken(token)) {
         // Token is valid => Add authen
         authenticationModel = AuthenticationModel.fromToken(token);
+        apiClient.setToken(token);
       } else {
         // Remove token
         FunctionUtil.removeToken();
@@ -90,44 +92,11 @@ class AuthenticationRepository {
     }
   }
 
-  // Future<AuthenticationModel> updateUser({
-  //   @required String token,
-  //   @required String name,
-  //   @required String phone,
-  //   @required String imageSource,
-  // }) async {
-  //   Map<String, dynamic> map = {
-  //     'name': name,
-  //     'phone_number': phone,
-  //   };
-  //   if (imageSource != null && imageSource.isNotEmpty) {
-  //     File file = File(imageSource);
-  //     map.addAll(
-  //         {'avatar': MultipartFile(file, filename: basename(imageSource))});
-  //   }
-  //   Response response = await apiClient.fetchData(
-  //     api: UtilUrl.USER,
-  //     header: UtilFunction.getAuthorizeHeader(token),
-  //     method: RequestMethod.POST,
-  //     body: FormData(map),
-  //   );
-  //   String status = UtilFunction.checkResponse(response);
-  //   if (status == UtilStatus.SUCCESS) {
-  //     final userJson = response.body;
-  //     AuthenticationModel authenticationModel =
-  //         AuthenticationModel.fromJsonWithToken(userJson, token);
-  //     return authenticationModel;
-  //   } else if (status == UtilStatus.UNAUTHENTICATED) {
-  //     throw Exception(status);
-  //   } else {
-  //     throw Exception('Update user failed!!!');
-  //   }
-  // }
-
   // Logout
   Future<void> logout() async {
     // Remove current authen
     _controller.add(AuthenticationModel.empty);
+    apiClient.setToken('');
 
     // Remove token
     FunctionUtil.removeToken();

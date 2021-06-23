@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sts/blocs/user/user_bloc.dart';
 import 'package:sts/cubits/selected_index_cubit.dart';
 import 'package:sts/custom_widget/bottom_navigation_bar_custom_widget.dart';
 import 'package:sts/pages/main/tab/people_page.dart';

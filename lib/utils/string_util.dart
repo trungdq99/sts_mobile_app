@@ -17,4 +17,7 @@ class StringUtil {
   static const String REGISTER_LABEL = 'Register';
   static const String PEOPLE_LABEL = 'People';
   static const String PROFILE_LABEL = 'Profile';
+
+  //
+  static const String EXPIRED_LOGIN = 'Your Login session has expired!';
 }

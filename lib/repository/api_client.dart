@@ -15,6 +15,12 @@ enum RequestMethod {
 class ApiClient extends GetConnect {
   ApiClient();
 
+  void setToken(String token) => httpClient.addAuthenticator((request) async {
+        // Set the header
+        request.headers['Authorization'] = 'Bearer $token';
+        return request;
+      });
+
   Future fetchData({
     String api,
     RequestMethod method,
