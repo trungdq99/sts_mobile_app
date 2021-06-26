@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +33,7 @@ class TimeSheetPage extends StatelessWidget {
             IconTextCustomWidget(
               icon: FontAwesomeIcons.calendar,
               text: '7 Jun - 13 Jun',
-              fontWeight: FontWeight.bold,
+              textStyle: Get.textTheme.button,
             ),
             SpaceUtil.verticalSmall(),
             _buildTimeSheet(),
@@ -38,7 +42,7 @@ class TimeSheetPage extends StatelessWidget {
             IconTextCustomWidget(
               icon: FontAwesomeIcons.calendar,
               text: '14 Jun - 20 Jun',
-              fontWeight: FontWeight.bold,
+              textStyle: Get.textTheme.button,
             ),
             SpaceUtil.verticalSmall(),
             _buildTimeSheet(),
@@ -60,8 +64,7 @@ class TimeSheetPage extends StatelessWidget {
         icon: FontAwesomeIcons.solidClock,
         text: 'Tổng tuần: 8 giờ 20 phút',
         iconColor: ColorUtil.BLUE1,
-        color: ColorUtil.WHITE,
-        fontWeight: FontWeight.bold,
+        textStyle: Get.textTheme.button,
       ),
     );
   }

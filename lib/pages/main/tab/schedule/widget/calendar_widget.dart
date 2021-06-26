@@ -100,13 +100,13 @@ class CalendarWidget extends StatelessWidget {
                   Text(
                     dayStr,
                     style: Get.textTheme.button.copyWith(
-                      color: ColorUtil.BLUE,
+                      color: ColorUtil.PRIMARY_LIGHT,
                     ),
                   ),
                   Text(
                     monthStr,
                     style: Get.textTheme.button.copyWith(
-                      color: ColorUtil.BLUE,
+                      color: ColorUtil.PRIMARY_LIGHT,
                     ),
                   ),
                 ],
@@ -151,13 +151,13 @@ class CalendarWidget extends StatelessWidget {
                   Text(
                     dayStr,
                     style: Get.textTheme.button.copyWith(
-                      color: ColorUtil.BLUE,
+                      color: ColorUtil.PRIMARY_LIGHT,
                     ),
                   ),
                   Text(
                     monthStr,
                     style: Get.textTheme.button.copyWith(
-                      color: ColorUtil.BLUE,
+                      color: ColorUtil.PRIMARY_LIGHT,
                     ),
                   ),
                 ],
@@ -178,13 +178,13 @@ class CalendarWidget extends StatelessWidget {
                   Text(
                     dayStr,
                     style: Get.textTheme.button.copyWith(
-                      color: ColorUtil.BLUE,
+                      color: ColorUtil.PRIMARY_LIGHT,
                     ),
                   ),
                   Text(
                     monthStr,
                     style: Get.textTheme.button.copyWith(
-                      color: ColorUtil.BLUE,
+                      color: ColorUtil.PRIMARY_LIGHT,
                     ),
                   ),
                 ],

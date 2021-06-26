@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -32,8 +36,7 @@ class AddRequestPage extends StatelessWidget {
             IconTextCustomWidget(
               icon: Icons.location_on,
               text: 'Passio Coffee FPTU',
-              color: ColorUtil.BLUE,
-              fontWeight: FontWeight.bold,
+              textStyle: Get.textTheme.button,
             ),
             SizedBox(
               height: 20,
@@ -42,7 +45,7 @@ class AddRequestPage extends StatelessWidget {
               children: [
                 Icon(
                   Icons.calendar_today,
-                  color: ColorUtil.BLUE,
+                  color: ColorUtil.PRIMARY_LIGHT,
                 ),
                 SizedBox(
                   width: 10,
@@ -74,7 +77,7 @@ class AddRequestPage extends StatelessWidget {
               children: [
                 Icon(
                   Icons.people,
-                  color: ColorUtil.BLUE,
+                  color: ColorUtil.PRIMARY_LIGHT,
                 ),
                 SizedBox(
                   width: 10,

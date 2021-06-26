@@ -1,5 +1,8 @@
-import 'dart:async';
+/*
+ * Author: Trung Shin
+ */
 
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sts/models/location_model.dart';

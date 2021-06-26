@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
@@ -109,6 +113,10 @@ class LoginForm extends StatelessWidget {
       builder: (context, state) {
         return ButtonCustomWidget(
           color: Get.theme.primaryColor,
+          margin: EdgeInsets.symmetric(
+            horizontal: 40,
+            vertical: 20,
+          ),
           onPressed: state.status.isValidated
               ? () {
                   FocusScope.of(context).unfocus();

@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:get/get.dart';
 import 'package:sts/constant.dart';
 import 'package:sts/utils/function_util.dart';
@@ -31,7 +35,6 @@ class ApiClient extends GetConnect {
       print('Call api: ${UrlUtil.BASE_URL}/$api');
       print('Method: $method');
       Response response;
-
       if (method == RequestMethod.GET) {
         response =
             await get('${UrlUtil.BASE_URL}/$api', headers: header).timeout(

@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sts/custom_widget/app_bar_custom_widget.dart';

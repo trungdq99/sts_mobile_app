@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:measured_size/measured_size.dart';
@@ -32,7 +36,7 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
             children: [
               Icon(
                 FontAwesomeIcons.hourglassStart,
-                color: ColorUtil.BLUE,
+                color: ColorUtil.PRIMARY_LIGHT,
               ),
               SizedBox(
                 height: 10,
@@ -43,13 +47,13 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
         ),
         FaIcon(
           FontAwesomeIcons.minus,
-          color: ColorUtil.BLUE,
+          color: ColorUtil.PRIMARY_LIGHT,
         ),
         Column(
           children: [
             Icon(
               FontAwesomeIcons.hourglassEnd,
-              color: ColorUtil.BLUE,
+              color: ColorUtil.PRIMARY_LIGHT,
             ),
             SizedBox(
               height: 10,
@@ -60,7 +64,7 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
         SizedBox(
           height: _height,
           child: VerticalDivider(
-            color: ColorUtil.BLUE,
+            color: ColorUtil.PRIMARY_LIGHT,
             thickness: 1,
           ),
         ),
@@ -68,7 +72,7 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
           children: [
             Icon(
               FontAwesomeIcons.solidHourglass,
-              color: ColorUtil.BLUE,
+              color: ColorUtil.PRIMARY_LIGHT,
             ),
             SizedBox(
               height: 10,

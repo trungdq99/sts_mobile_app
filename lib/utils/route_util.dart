@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/route_manager.dart';
@@ -7,7 +11,7 @@ import 'package:sts/pages/main/main_page.dart';
 import 'package:sts/pages/main/tab/people_page.dart';
 import 'package:sts/pages/main/tab/home_page.dart';
 import 'package:sts/pages/main/tab/profile_page.dart';
-import 'package:sts/pages/main/tab/register_page.dart';
+import 'package:sts/pages/main/tab/register/register_page.dart';
 import 'package:sts/pages/main/tab/schedule/schedule_page.dart';
 import 'package:sts/pages/profile/change_password_page.dart';
 import 'package:sts/pages/profile/edit_profile_page.dart';

@@ -1,4 +1,10 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:equatable/equatable.dart';
+import 'package:sts/utils/date_time_util.dart';
+import 'package:sts/utils/gender_util.dart';
 
 class UserModel extends Equatable {
   final String username;
@@ -7,9 +13,9 @@ class UserModel extends Equatable {
   final String lastName;
   final String dob;
   final String phone;
-  final bool gender;
+  final String gender;
   final String address;
-  final dynamic photoUrl;
+  final String photoUrl;
 
   const UserModel({
     this.username: '',
@@ -27,15 +33,15 @@ class UserModel extends Equatable {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      username: json['username'] as String,
-      email: json['email'] as String,
-      firstName: json['firstName'] as String,
-      lastName: json['lastName'] as String,
-      dob: json['dob'] as String,
-      phone: json['phone'] as String,
-      gender: json['gender'],
-      address: json['address'] as String,
-      photoUrl: json['photoUrl'],
+      username: json['username'] ?? '',
+      email: json['email'] ?? '',
+      firstName: json['firstName'] ?? '',
+      lastName: json['lastName'] ?? '',
+      dob: DateTimeUtil.formatDateTimeStringToDateString(json['dob'] ?? ''),
+      phone: json['phone'] ?? '',
+      gender: GenderUtil.checkGender(json['gender']),
+      address: json['address'] ?? '',
+      photoUrl: json['photoUrl'] ?? '',
     );
   }
 
@@ -45,7 +51,7 @@ class UserModel extends Equatable {
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
-      'dob': dob,
+      'dob': DateTimeUtil.formatDateStringToDateTimeString(dob),
       'phone': phone,
       'gender': gender,
       'address': address,
@@ -62,7 +68,7 @@ class UserModel extends Equatable {
     String lastName,
     String dob,
     String phone,
-    bool gender,
+    String gender,
     String address,
     dynamic photoUrl,
   }) {

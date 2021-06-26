@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 part of 'calendar_cubit.dart';
 
 class CalendarState extends Equatable {

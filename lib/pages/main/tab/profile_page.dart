@@ -1,12 +1,19 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:sts/blocs/authentication/authentication_bloc.dart';
+import 'package:sts/blocs/user/user_bloc.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
 import 'package:sts/custom_widget/circle_avatar_custom_widget.dart';
 import 'package:sts/custom_widget/icon_text_custom_widget.dart';
+import 'package:sts/custom_widget/image_network_custom_widget.dart';
+import 'package:sts/custom_widget/progressing_custom_widget.dart';
 import 'package:sts/utils/color_util.dart';
 import 'package:sts/utils/route_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -27,6 +34,7 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildInfo(),
+            SpaceUtil.verticalSmall(),
             _buildTimeOfWork(),
             SpaceUtil.verticalSmall(),
             _buildRank(),
@@ -131,10 +139,12 @@ class _ProfilePageState extends State<ProfilePage> {
               isUp: false,
               boxShape: NeumorphicBoxShape.circle(),
               padding: EdgeInsets.all(10),
+              margin: EdgeInsets.all(0),
               child: Text(
                 '1',
-                style: Get.textTheme.button.copyWith(
-                  color: ColorUtil.ORANGE,
+                style: Get.textTheme.bodyText1.copyWith(
+                  color: Get.theme.accentColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -174,10 +184,12 @@ class _ProfilePageState extends State<ProfilePage> {
               isUp: false,
               boxShape: NeumorphicBoxShape.circle(),
               padding: EdgeInsets.all(10),
+              margin: EdgeInsets.all(0),
               child: Text(
                 '3',
-                style: Get.textTheme.button.copyWith(
-                  color: ColorUtil.ORANGE,
+                style: Get.textTheme.bodyText1.copyWith(
+                  color: Get.theme.accentColor,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -265,7 +277,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return ButtonCustomWidget(
       padding: EdgeInsets.all(0),
       margin: EdgeInsets.all(0),
-      color: ColorUtil.WHITE,
       onPressed: () {
         Get.toNamed(RouteUtil.JOB_INFO);
       },
@@ -294,7 +305,6 @@ class _ProfilePageState extends State<ProfilePage> {
     return ButtonCustomWidget(
       padding: EdgeInsets.all(0),
       margin: EdgeInsets.all(0),
-      color: ColorUtil.WHITE,
       onPressed: () {
         Get.toNamed(RouteUtil.EDIT_PROFILE);
       },
@@ -323,8 +333,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return IconTextCustomWidget(
       icon: FontAwesomeIcons.hashtag,
       text: 'Top 1 at Passio Coffee FPTU',
-      color: Get.theme.primaryColor,
-      fontWeight: FontWeight.bold,
+      textStyle: Get.textTheme.bodyText1.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 
@@ -332,31 +343,43 @@ class _ProfilePageState extends State<ProfilePage> {
     return IconTextCustomWidget(
       icon: FontAwesomeIcons.solidHourglass,
       text: '1000 hours of work',
-      color: Get.theme.primaryColor,
-      fontWeight: FontWeight.bold,
+      textStyle: Get.textTheme.bodyText1.copyWith(
+        fontWeight: FontWeight.bold,
+      ),
     );
   }
 
   Widget _buildInfo() {
-    return ListTile(
-      leading: ContainerCustomWidget(
-        boxShape: NeumorphicBoxShape.circle(),
-        color: Get.theme.primaryColor,
-        padding: EdgeInsets.all(10),
-        child: Icon(
-          Icons.person,
-          color: ColorUtil.WHITE,
-        ),
-      ),
-      title: Text(
-        'Tony Staff',
-        style: Get.textTheme.headline6,
-      ),
-      subtitle: Text(
-        'I am Tony Staff',
-        style: Get.textTheme.bodyText2,
-      ),
-      contentPadding: EdgeInsets.all(0),
+    return BlocBuilder<UserBloc, UserState>(
+      builder: (context, state) {
+        Widget title = SizedBox();
+        if (state.status == UserStatus.loadingSuccessful) {
+          title = Text(
+            '${state.userModel.firstName} ${state.userModel.lastName}',
+            style: Get.textTheme.headline6,
+          );
+        } else if (state.status == UserStatus.loading) {
+          title = ProgressingCustomWidget(
+            type: ProcessingType.text,
+          );
+        }
+
+        return ListTile(
+          leading: ContainerCustomWidget(
+            boxShape: NeumorphicBoxShape.circle(),
+            padding: EdgeInsets.all(0),
+            margin: EdgeInsets.all(0),
+            color: Get.theme.primaryColor,
+            child: ImageNetworkCustomWidget(
+              imgUrl: state.userModel.photoUrl,
+              height: 50,
+              width: 50,
+            ),
+          ),
+          title: title,
+          contentPadding: EdgeInsets.all(0),
+        );
+      },
     );
   }
 }

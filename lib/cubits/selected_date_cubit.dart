@@ -1,3 +1,6 @@
+/*
+ * Author: Trung Shin
+ */
 import 'package:bloc/bloc.dart';
 
 class SelectedDateCubit extends Cubit<DateTime> {

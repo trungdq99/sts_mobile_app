@@ -1,9 +1,11 @@
+/*
+ * Author: Trung Shin
+ */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:sts/cubits/selected_index_cubit.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
-import 'package:sts/utils/color_util.dart';
 
 class BottomItem {
   final IconData icon;
@@ -68,7 +70,8 @@ class _BottomNavigationBarCustomWidgetState
     );
     return ContainerCustomWidget(
       radius: 0,
-      color: ColorUtil.WHITE,
+      color: Get.theme.backgroundColor,
+      margin: EdgeInsets.all(0),
       width: context.width,
       padding: EdgeInsets.only(
         top: 5,
@@ -105,11 +108,10 @@ class _BottomNavigationBarCustomWidgetState
                   width: 40,
                   height: 40,
                   margin: EdgeInsets.all(5),
-                  color: ColorUtil.WHITE,
+                  padding: EdgeInsets.all(0),
+                  color: Get.theme.backgroundColor,
                   child: Icon(
                     item.icon,
-                    color: ColorUtil.BLUE,
-                    size: 24,
                   ),
                 ),
                 Text(
@@ -117,10 +119,8 @@ class _BottomNavigationBarCustomWidgetState
                   style: Get.textTheme.bodyText2.copyWith(
                     fontWeight:
                         state == index ? FontWeight.bold : FontWeight.normal,
-                    // color: state == index
-                    //     ? Get.theme.accentColor
-                    //     : Get.theme.primaryColor,
                   ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ],
             ),

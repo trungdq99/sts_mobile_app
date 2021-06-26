@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'dart:ui' as ui;
 import 'package:sts/utils/color_util.dart';

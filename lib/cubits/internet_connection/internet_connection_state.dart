@@ -1,3 +1,6 @@
+/*
+ * Author: Trung Shin
+ */
 part of 'internet_connection_cubit.dart';
 
 enum InternetConnectionStatus {

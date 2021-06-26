@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -79,7 +83,7 @@ class _TextFieldCustomWidgetState extends State<TextFieldCustomWidget> {
           child: ContainerCustomWidget(
             radius: widget.radius,
             boxShape: widget.boxShape,
-            color: ColorUtil.WHITE,
+            color: Get.theme.backgroundColor,
             isUp: !_isEditing || !widget.enable,
             margin: widget.margin,
             padding: widget.padding,
@@ -92,8 +96,8 @@ class _TextFieldCustomWidgetState extends State<TextFieldCustomWidget> {
                           widget.prefixIcon,
                           size: 24,
                           color: _isEditing
-                              ? ColorUtil.BLUE
-                              : ColorUtil.GREY.withOpacity(0.8),
+                              ? Get.theme.primaryColor
+                              : Get.theme.hintColor,
                         ),
                       )
                     : SizedBox(),
@@ -120,14 +124,14 @@ class _TextFieldCustomWidgetState extends State<TextFieldCustomWidget> {
                   ),
                   textAlign: widget.textAlign,
                   style: Get.textTheme.bodyText1.copyWith(
-                    color: ColorUtil.BLUE,
+                    color: Get.theme.primaryColor,
                     fontWeight: FontWeight.bold,
                   ),
                   maxLength: widget.maxLength,
                   minLines: widget.minLines,
                   maxLines: widget.maxLines,
                   keyboardType: widget.keyboardType,
-                  cursorColor: ColorUtil.BLUE,
+                  cursorColor: ColorUtil.PRIMARY_LIGHT,
                   obscureText: widget.obscureText,
                 ),
               ],
@@ -141,7 +145,7 @@ class _TextFieldCustomWidgetState extends State<TextFieldCustomWidget> {
               ? Text(
                   widget.errorText,
                   style: Get.textTheme.bodyText2.copyWith(
-                    color: Colors.red,
+                    color: Get.theme.errorColor,
                     fontStyle: FontStyle.italic,
                   ),
                 )

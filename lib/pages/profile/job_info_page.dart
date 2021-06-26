@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -48,7 +52,7 @@ class JobInfoPage extends StatelessWidget {
           IconTextCustomWidget(
             icon: FontAwesomeIcons.mapMarkerAlt,
             text: location,
-            fontWeight: FontWeight.bold,
+            textStyle: Get.textTheme.button,
           ),
           SpaceUtil.verticalSmall(),
           Row(

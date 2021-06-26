@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:equatable/equatable.dart';
 
 class LocationModel extends Equatable {

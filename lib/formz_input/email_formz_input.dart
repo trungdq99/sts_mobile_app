@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:formz/formz.dart';
 
 enum EmailValidationError { invalid }

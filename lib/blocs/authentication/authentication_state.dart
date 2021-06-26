@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 part of 'authentication_bloc.dart';
 
 enum AuthenticationStatus {

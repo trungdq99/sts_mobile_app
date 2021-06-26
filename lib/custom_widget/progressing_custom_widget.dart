@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:flutter_placeholder_textlines/flutter_placeholder_textlines.dart';
@@ -12,9 +16,11 @@ enum ProcessingType {
 class ProgressingCustomWidget extends StatelessWidget {
   final ProcessingType type;
   final Color color;
+  final double circleSize;
   const ProgressingCustomWidget({
     this.type: ProcessingType.circle,
     this.color,
+    this.circleSize: 40,
   });
 
   @override
@@ -23,7 +29,7 @@ class ProgressingCustomWidget extends StatelessWidget {
       case ProcessingType.circle:
         return SpinKitPouringHourglass(
           color: color ?? Get.theme.primaryColor,
-          size: 40,
+          size: circleSize,
           duration: Duration(milliseconds: 600),
         );
       case ProcessingType.text:

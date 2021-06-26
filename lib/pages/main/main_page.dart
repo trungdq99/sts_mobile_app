@@ -1,11 +1,16 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sts/cubits/select_week_cubit.dart';
 import 'package:sts/cubits/selected_index_cubit.dart';
 import 'package:sts/custom_widget/bottom_navigation_bar_custom_widget.dart';
 import 'package:sts/pages/main/tab/people_page.dart';
 import 'package:sts/pages/main/tab/home_page.dart';
-import 'package:sts/pages/main/tab/register_page.dart';
+import 'package:sts/pages/main/tab/register/register_page.dart';
 import 'package:sts/pages/main/tab/schedule/cubit/calendar_cubit.dart';
 import 'package:sts/pages/main/tab/schedule/schedule_page.dart';
 import 'package:sts/utils/string_util.dart';
@@ -35,7 +40,10 @@ class MainPage extends StatelessWidget {
               create: (context) => CalendarCubit(),
               child: SchedulePage(),
             ),
-            RegisterPage(),
+            BlocProvider(
+              create: (context) => SelectWeekCubit()..moveNextWeek(),
+              child: RegisterPage(),
+            ),
             PeoplePage(),
             ProfilePage(),
           ],

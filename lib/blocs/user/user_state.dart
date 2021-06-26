@@ -1,6 +1,10 @@
+/*
+ * Author: Trung Shin
+ */
+
 part of 'user_bloc.dart';
 
-enum LoadUserStatus {
+enum UserStatus {
   initial,
   loading,
   loadingSuccessful,
@@ -8,25 +12,30 @@ enum LoadUserStatus {
 }
 
 class UserState extends Equatable {
-  final LoadUserStatus loadStatus;
+  final UserStatus status;
   final UserModel userModel;
+  final String message;
   const UserState({
-    this.loadStatus: LoadUserStatus.initial,
+    this.status: UserStatus.initial,
     this.userModel: UserModel.empty,
+    this.message: '',
   });
 
   UserState copyWith({
-    LoadUserStatus loadStatus,
+    UserStatus status,
     UserModel userModel,
+    String message,
   }) =>
       UserState(
-        loadStatus: loadStatus ?? this.loadStatus,
+        status: status ?? this.status,
         userModel: userModel ?? this.userModel,
+        message: message ?? this.message,
       );
 
   @override
   List<Object> get props => [
-        loadStatus,
+        status,
         userModel,
+        message,
       ];
 }

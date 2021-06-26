@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "309631526929",
+    "project_id": "sts-application",
+    "storage_bucket": "sts-application.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:309631526929:android:ba0cc2810241a4a6c4a9b0",
+        "android_client_info": {
+          "package_name": "com.example.sts"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "309631526929-ejdr50lkirrie84mmntq3j4fdi43i6dg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLLAVTWIOi9bK1IBaFHc-NF8AEtlIvnd4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "309631526929-ejdr50lkirrie84mmntq3j4fdi43i6dg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -35,23 +39,23 @@ class ContainerCustomWidget extends StatelessWidget {
       style: isUp
           ? NeumorphicStyleUtil.styleUp(
               radius: radius,
-              color: color ?? Get.theme.buttonColor,
+              color: color ?? Get.theme.backgroundColor,
               boxShape: boxShape,
             )
           : NeumorphicStyleUtil.styleDown(
               radius: radius,
-              color: color ?? Get.theme.buttonColor,
+              color: color ?? Get.theme.backgroundColor,
               boxShape: boxShape,
             ),
       padding: EdgeInsets.all(0),
-      margin: margin,
+      margin: margin ?? EdgeInsets.all(20),
       child: Container(
         width: width,
         height: height,
         decoration: BoxDecoration(
           gradient: gradient,
         ),
-        padding: padding,
+        padding: padding ?? EdgeInsets.all(10),
         alignment: alignment,
         child: child,
       ),

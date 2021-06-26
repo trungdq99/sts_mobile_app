@@ -1,26 +1,29 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sts/custom_widget/circle_avatar_custom_widget.dart';
-import 'package:sts/utils/color_util.dart';
+import 'package:sts/utils/space_util.dart';
 
 class IconTextCustomWidget extends StatelessWidget {
   final IconData icon;
   final String text;
-  final Color color;
   final Color iconColor;
+  final Color backgroundIconColor;
   final double iconSize;
-  final double textSize;
-  final double padding;
-  final FontWeight fontWeight;
+  final TextStyle textStyle;
+  final EdgeInsets padding;
+
   const IconTextCustomWidget({
     @required this.icon,
     @required this.text,
-    this.color,
     this.iconColor,
-    this.iconSize: 20,
-    this.textSize: 16,
-    this.padding: 10,
-    this.fontWeight: FontWeight.normal,
+    this.backgroundIconColor,
+    this.iconSize,
+    this.padding,
+    this.textStyle,
   });
   @override
   Widget build(BuildContext context) {
@@ -28,25 +31,18 @@ class IconTextCustomWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         CircleAvatarCustomWidget(
-          padding: EdgeInsets.all(5),
+          padding: padding,
+          color: backgroundIconColor,
           child: Icon(
             icon,
-            size: iconSize,
             color: iconColor ?? Get.theme.primaryColor,
           ),
         ),
-        SizedBox(
-          width: text.isNotEmpty ? padding : 0,
-        ),
+        SpaceUtil.horizontalSmall(),
         Flexible(
           child: Text(
             text,
-            style: TextStyle(
-              // color: color ?? Get.theme.primaryColor,
-              color: color ?? ColorUtil.BLACK,
-              fontSize: textSize,
-              fontWeight: fontWeight,
-            ),
+            style: textStyle ?? Get.textTheme.bodyText1,
             overflow: TextOverflow.ellipsis,
           ),
         )

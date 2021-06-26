@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:formz/formz.dart';
@@ -12,6 +16,7 @@ class LoginCubit extends Cubit<LoginState> {
 
   final AuthenticationRepository _authenticationRepository;
 
+  // Handle Username Changed Event
   void usernameChanged(String value) {
     final username = UsernameFormzInput.dirty(value);
     emit(state.copyWith(
@@ -20,6 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
     ));
   }
 
+  // Handle Password Changed Event
   void passwordChanged(String value) {
     final password = PasswordFormzInput.dirty(value);
     emit(state.copyWith(
@@ -28,6 +34,7 @@ class LoginCubit extends Cubit<LoginState> {
     ));
   }
 
+  // Handle Login Submitted
   Future<void> loginSubmitted() async {
     if (!state.status.isValidated) return;
     emit(state.copyWith(status: FormzStatus.submissionInProgress));

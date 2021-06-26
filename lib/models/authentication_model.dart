@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:equatable/equatable.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:sts/models/jwt_model.dart';

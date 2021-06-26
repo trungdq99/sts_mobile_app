@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 part of 'login_cubit.dart';
 
 class LoginState extends Equatable {

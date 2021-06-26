@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'dart:async';
 import 'package:meta/meta.dart';
 import 'package:get/get.dart';
@@ -57,6 +61,8 @@ class AuthenticationRepository {
 
         // Save token to local
         FunctionUtil.saveToken(authenticationModel.token);
+
+        // Set token to client
         apiClient.setToken(authenticationModel.token);
       } else {
         // Throw Role error if User doesn't login with Staff role
@@ -81,6 +87,8 @@ class AuthenticationRepository {
       if (FunctionUtil.checkToken(token)) {
         // Token is valid => Add authen
         authenticationModel = AuthenticationModel.fromToken(token);
+
+        // Set token to client
         apiClient.setToken(token);
       } else {
         // Remove token

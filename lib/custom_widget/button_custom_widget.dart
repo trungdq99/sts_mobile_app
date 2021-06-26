@@ -1,3 +1,6 @@
+/*
+ * Author: Trung Shin
+ */
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
@@ -34,16 +37,22 @@ class ButtonCustomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Color buttonColor = Get.theme.backgroundColor;
+    if (onPressed == null) {
+      buttonColor = Get.theme.disabledColor;
+    } else if (color != null) {
+      buttonColor = color;
+    }
     return NeumorphicButton(
       style: isUp
           ? NeumorphicStyleUtil.styleUp(
               radius: radius,
-              color: color ?? Get.theme.buttonColor,
+              color: buttonColor,
               boxShape: boxShape,
             )
           : NeumorphicStyleUtil.styleDown(
               radius: radius,
-              color: color ?? Get.theme.buttonColor,
+              color: buttonColor,
               boxShape: boxShape,
             ),
       padding: EdgeInsets.all(0),

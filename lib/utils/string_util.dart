@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 class StringUtil {
   // Login Page
   static const String USERNAME_INPUT_HINT = 'Username'; // Username input hint

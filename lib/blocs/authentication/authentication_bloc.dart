@@ -1,9 +1,18 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:get/get.dart';
+import 'package:sts/custom_widget/notification_dialog_custom_widget.dart';
 import 'package:sts/models/authentication_model.dart';
 import 'package:sts/repository/authentication_repository.dart';
+import 'package:sts/repository/user_repository.dart';
+import 'package:sts/utils/function_util.dart';
+import 'package:sts/utils/response_status_util.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -11,22 +20,25 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationRepository _authenticationRepository;
+  final UserRepository _userRepository;
   StreamSubscription<AuthenticationModel> _authenticationSubscription;
 
   AuthenticationBloc({
     @required AuthenticationRepository authenticationRepository,
+    @required UserRepository userRepository,
   })  : _authenticationRepository = authenticationRepository,
+        _userRepository = userRepository,
         super(AuthenticationState()) {
     _authenticationSubscription =
         _authenticationRepository.authentication.listen(
-      (status) => add(AuthenticationEventUserChanged(status)),
+      (status) => add(AuthenticationEventChanged(status)),
     );
   }
 
   @override
   Stream<AuthenticationState> mapEventToState(
       AuthenticationEvent event) async* {
-    if (event is AuthenticationEventUserChanged) {
+    if (event is AuthenticationEventChanged) {
       yield* _mapAuthenticationStatusChangedToState(event);
     } else if (event is AuthenticationEventLoadPreviousLogin) {
       yield* _mapLoadPreviousLoginToState(event);
@@ -39,19 +51,39 @@ class AuthenticationBloc
 
   @override
   Future<void> close() {
-    _authenticationSubscription.cancel();
-    _authenticationRepository.dispose();
+    _authenticationSubscription?.cancel();
+    _authenticationRepository?.dispose();
+    _userRepository?.dispose();
     return super.close();
   }
 
   Stream<AuthenticationState> _mapAuthenticationStatusChangedToState(
-    AuthenticationEventUserChanged event,
+    AuthenticationEventChanged event,
   ) async* {
     if (event.authenticationModel == AuthenticationModel.empty) {
       yield AuthenticationState.unauthenticated();
     } else {
-      yield AuthenticationState.authenticated(
-          authenticationModel: event.authenticationModel);
+      try {
+        // Load User
+        await _userRepository.getUser();
+        yield AuthenticationState.authenticated(
+            authenticationModel: event.authenticationModel);
+      } catch (e) {
+        String error = FunctionUtil.getException(e);
+        if (error == ResponseStatusUtil.UNAUTHENTICATED) {
+          FunctionUtil.handleUnauthentication(_authenticationRepository);
+        } else {
+          Get.dialog(NotificationDialogCustomWidget(
+            text: 'Error: $error',
+            isPop: false,
+            onConfirm: () {
+              _authenticationRepository.logout();
+            },
+          ));
+        }
+        print(
+            'AuthenticationBloc - _mapAuthenticationStatusChangedToState: $error');
+      }
     }
   }
 
@@ -60,7 +92,7 @@ class AuthenticationBloc
     try {
       await _authenticationRepository.logout();
     } catch (e) {
-      print('Error at: AuthenticationBloc - _mapLogoutToState: $e');
+      print('AuthenticationBloc - _mapLogoutToState: $e');
     }
   }
 
@@ -74,79 +106,4 @@ class AuthenticationBloc
           'AuthenticationBloc - _mapLoadPreviousLoginToState: ${e.toString()}');
     }
   }
-
-  // Stream<AuthenticationState> _mapAuthenticatedToState(
-  //     AuthenticationEventAuthenticated event) async* {
-  //   yield AuthenticationState.authenticating();
-  //   // await Future.delayed(Duration(milliseconds: 1000));
-  //   if (event.authenticationModel != null) {
-  //     _saveToken(event.authenticationModel.token);
-  //     yield AuthenticationState.authenticated(
-  //       authenticationModel: event.authenticationModel,
-  //     );
-  //   } else {
-  //     yield AuthenticationState.unauthenticated();
-  //   }
-  // }
-
-  // Stream<AuthenticationState> _mapLoadUserToState(
-  //     AuthenticationEventLoadUser event, AuthenticationState state) async* {
-  //   yield state.copyWith(
-  //     isLoading: true,
-  //   );
-  //   await Future.delayed(Duration(milliseconds: 1000));
-  //   AuthenticationModel authenticationModel;
-  //   try {
-  //     authenticationModel = await authenticationRepository.fetchUser(
-  //         token: state.authenticationModel.token);
-  //   } catch (e) {
-  //     print('Error at: AuthenticationBloc - _mapLoadUserToState: $e');
-  //   }
-  //   if (authenticationModel != null) {
-  //     yield state.copyWith(
-  //       authenticationModel: authenticationModel,
-  //       isLoading: false,
-  //     );
-  //   } else {
-  //     yield AuthenticationState.unauthenticated();
-  //     _removeToken();
-  //   }
-  // }
-
-  // Stream<AuthenticationState> _mapUpdateUserToState(
-  //     AuthenticationEventUpdateUser event, AuthenticationState state) async* {
-  //   yield state.copyWith(
-  //     isLoading: true,
-  //   );
-  //   await Future.delayed(Duration(milliseconds: 1000));
-  //   AuthenticationModel authenticationModel;
-  //   try {
-  //     authenticationModel = await authenticationRepository.updateUser(
-  //       token: state.authenticationModel.token,
-  //       name: event.name ?? state.authenticationModel.user.name,
-  //       phone: event.phone ?? state.authenticationModel.user.phone,
-  //       imageSource: event.imageSource,
-  //     );
-  //   } catch (e) {
-  //     print('Error at: AuthenticationBloc - _mapUpdateUserToState: $e');
-  //   }
-  //   if (authenticationModel != null) {
-  //     yield state.copyWith(
-  //       authenticationModel: authenticationModel,
-  //       isLoading: false,
-  //     );
-  //   } else {
-  //     yield AuthenticationState.unauthenticated();
-  //     _removeToken();
-  //   }
-  // }
-
-  // Future<AuthenticationModel> login({
-  //   @required String username,
-  //   @required String password,
-  // }) =>
-  //     authenticationRepository.checkLogin(
-  //       username: username,
-  //       password: password,
-  //     );
 }

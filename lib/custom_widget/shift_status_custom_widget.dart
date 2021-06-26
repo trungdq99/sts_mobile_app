@@ -1,7 +1,10 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sts/utils/color_util.dart';
-
 import 'container_custom_widget.dart';
 
 class ShiftStatusCustomWidget extends StatelessWidget {
@@ -10,7 +13,7 @@ class ShiftStatusCustomWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Color color = ColorUtil.BLUE;
+    Color color = ColorUtil.PRIMARY_LIGHT;
     switch (status) {
       case 'Vắng mặt':
         color = ColorUtil.RED;

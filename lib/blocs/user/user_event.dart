@@ -1,3 +1,6 @@
+/*
+ * Author: Trung Shin
+ */
 part of 'user_bloc.dart';
 
 abstract class UserEvent extends Equatable {
@@ -7,4 +10,23 @@ abstract class UserEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class UserEventLoad extends UserEvent {}
+class UserEventChange extends UserEvent {
+  final UserModel userModel;
+
+  const UserEventChange({@required this.userModel});
+
+  @override
+  List<Object> get props => [userModel];
+}
+
+class UserEventGet extends UserEvent {}
+
+class UserEventUpdate extends UserEvent {
+  final UserModel userModel;
+  const UserEventUpdate({
+    @required this.userModel,
+  });
+
+  @override
+  List<Object> get props => [userModel];
+}

@@ -1,3 +1,7 @@
+/*
+ * Author: Trung Shin
+ */
+
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -35,8 +39,7 @@ class ShiftDetailPage extends StatelessWidget {
                 IconTextCustomWidget(
                   icon: Icons.location_on,
                   text: 'Passio Coffee FPTU',
-                  color: ColorUtil.BLUE,
-                  fontWeight: FontWeight.bold,
+                  textStyle: Get.textTheme.button,
                 ),
                 // ShiftStatusCustomWidget(
                 //   status: Get.arguments,
@@ -47,15 +50,13 @@ class ShiftDetailPage extends StatelessWidget {
             IconTextCustomWidget(
               icon: FontAwesomeIcons.tag,
               text: 'Bartender',
-              color: ColorUtil.BLUE,
-              fontWeight: FontWeight.bold,
+              textStyle: Get.textTheme.button,
             ),
             SpaceUtil.verticalDefault(),
             IconTextCustomWidget(
               icon: Icons.calendar_today,
               text: 'Wednesday, 2 June 2021',
-              color: ColorUtil.BLUE,
-              fontWeight: FontWeight.bold,
+              textStyle: Get.textTheme.button,
             ),
             SpaceUtil.verticalSmall(),
             Padding(
@@ -68,22 +69,20 @@ class ShiftDetailPage extends StatelessWidget {
             IconTextCustomWidget(
               icon: Icons.mode_comment,
               text: 'Some notes for this shift...',
-              color: ColorUtil.BLUE,
-              fontWeight: FontWeight.bold,
+              textStyle: Get.textTheme.button,
             ),
             SpaceUtil.verticalDefault(),
             IconTextCustomWidget(
               icon: Icons.fastfood,
               text: '30 min',
-              color: ColorUtil.BLUE,
-              fontWeight: FontWeight.bold,
+              textStyle: Get.textTheme.button,
             ),
             SpaceUtil.verticalDefault(),
             Row(
               children: [
                 Icon(
                   Icons.people,
-                  color: ColorUtil.BLUE,
+                  color: ColorUtil.PRIMARY_LIGHT,
                 ),
                 SizedBox(
                   width: 10,
