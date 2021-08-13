@@ -10,11 +10,13 @@ import 'package:sts/utils/space_util.dart';
 
 class NotificationDialogCustomWidget extends StatefulWidget {
   final VoidCallback onConfirm;
-  final String text;
+  final String title;
+  final String message;
   final bool isPop;
   const NotificationDialogCustomWidget({
     this.onConfirm,
-    this.text: '',
+    this.title: '',
+    this.message: '',
     this.isPop: true,
   });
 
@@ -44,7 +46,8 @@ class _NotificationDialogCustomWidgetState
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _buildText(),
+          _buildTitle(),
+          _buildMessage(),
           SpaceUtil.verticalDefault(),
           _buildConfirmButton(),
         ],
@@ -52,12 +55,19 @@ class _NotificationDialogCustomWidgetState
     );
   }
 
-  Widget _buildText() {
+  Widget _buildTitle() {
     return Text(
-      widget.text,
+      widget.title,
       style: Get.textTheme.bodyText1.copyWith(
         fontWeight: FontWeight.bold,
       ),
+    );
+  }
+
+  Widget _buildMessage() {
+    return Text(
+      widget.message,
+      style: Get.textTheme.bodyText2,
     );
   }
 

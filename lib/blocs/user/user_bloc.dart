@@ -6,11 +6,9 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:sts/models/user_model.dart';
-import 'package:sts/repository/authentication_repository.dart';
-import 'package:sts/repository/user_repository.dart';
-import 'package:sts/utils/function_util.dart';
-import 'package:sts/utils/response_status_util.dart';
+import 'package:sts/models/models.dart';
+import 'package:sts/repository/repository.dart';
+import 'package:sts/utils/utils.dart';
 
 part 'user_event.dart';
 part 'user_state.dart';
@@ -18,12 +16,21 @@ part 'user_state.dart';
 class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository _userRepository;
   final AuthenticationRepository _authenticationRepository;
+  final BrandRepository _brandRepository;
+  final SkillsRepository _skillRepository;
+  final StoresRepository _storeRepository;
   StreamSubscription<UserModel> _userSubscription;
   UserBloc({
     @required UserRepository userRepository,
     @required AuthenticationRepository authenticationRepository,
+    @required BrandRepository brandRepository,
+    @required SkillsRepository skillRepository,
+    @required StoresRepository storeRepository,
   })  : _userRepository = userRepository,
         _authenticationRepository = authenticationRepository,
+        _brandRepository = brandRepository,
+        _skillRepository = skillRepository,
+        _storeRepository = storeRepository,
         super(UserState()) {
     _userSubscription = _userRepository.user.listen(
       (status) => add(UserEventChange(userModel: status)),
@@ -56,8 +63,27 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   ) async* {
     if (event.userModel != UserModel.empty) {
       yield state.copyWith(
+        status: UserStatus.loading,
+      );
+      // Load brand
+      _brandRepository.getBrand(
+        id: event.userModel.brandId,
+      );
+
+      // Load skills
+      _skillRepository.getSkills();
+
+      // Load stores
+      _storeRepository.getStores();
+
+      yield state.copyWith(
         userModel: event.userModel,
         status: UserStatus.loadingSuccessful,
+      );
+    } else {
+      yield state.copyWith(
+        status: UserStatus.loadingFailure,
+        message: StringUtil.DEFAULT_ERROR,
       );
     }
   }
@@ -70,9 +96,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
 
     try {
       await _userRepository.getUser();
-      yield state.copyWith(
-        status: UserStatus.loadingSuccessful,
-      );
+      // yield state.copyWith(
+      //   status: UserStatus.loadingSuccessful,
+      // );
     } catch (e) {
       String error = FunctionUtil.getException(e);
       print('UserBloc - _mapGetToState: $error');

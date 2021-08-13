@@ -3,14 +3,11 @@
  */
 
 import 'dart:async';
-import 'package:meta/meta.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:sts/constant.dart';
-import 'package:sts/models/authentication_model.dart';
-import 'package:sts/utils/function_util.dart';
-import 'package:sts/utils/response_status_util.dart';
-import 'package:sts/utils/string_util.dart';
-import 'package:sts/utils/url_util.dart';
+import 'package:sts/models/models.dart';
+import 'package:sts/utils/utils.dart';
 import 'api_client.dart';
 
 class AuthenticationRepository {

@@ -4,41 +4,42 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
-import 'package:sts/custom_widget/logo_custom_widget.dart';
-import 'package:sts/pages/login/cubit/login_cubit.dart';
-import 'package:sts/repository/authentication_repository.dart';
-import 'package:sts/utils/space_util.dart';
-import 'package:sts/utils/string_util.dart';
-import 'widget/login_form_widget.dart';
+import 'package:sts/custom_widget/custom_widget.dart';
+import 'package:sts/pages/login/widgets/widgets.dart';
+import 'package:sts/repository/repository.dart';
+import 'package:sts/utils/utils.dart';
+import 'cubits/cubits.dart';
+import 'package:formz/formz.dart';
 
 class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: GestureDetector(
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: SingleChildScrollView(
-            padding: EdgeInsets.all(20),
-            child: Column(
+    return BlocProvider(
+      create: (context) => LoginCubit(context.read<AuthenticationRepository>()),
+      child: Scaffold(
+        body: SafeArea(
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).unfocus();
+            },
+            child: Stack(
               children: [
-                SpaceUtil.verticalBig(),
-                LogoCustomWidget(),
-                SpaceUtil.verticalDefault(),
-                BlocProvider(
-                  create: (context) =>
-                      LoginCubit(context.read<AuthenticationRepository>()),
-                  child: LoginForm(),
+                SingleChildScrollView(
+                  padding: EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      SpaceUtil.verticalBig(),
+                      LogoCustomWidget(),
+                      SpaceUtil.verticalDefault(),
+                      UsernameWidget(),
+                      PasswordWidget(),
+                      LoginMessageWidget(),
+                      LoginButtonWidget(),
+                      ForgotPasswordButtonWidget(),
+                    ],
+                  ),
                 ),
-                _forgotPasswordButton(),
-                // Divider(
-                //   color: Colors.black,
-                // ),
-                // _loginWithText(),
-                // _buildGoogleButotn(),
+                _progressing(),
               ],
             ),
           ),
@@ -47,16 +48,13 @@ class LoginPage extends StatelessWidget {
     );
   }
 
-  Widget _forgotPasswordButton() {
-    return TextButton(
-      onPressed: () {},
-      child: Text(
-        StringUtil.FORGOT_PASSWORD_BUTTON,
-        style: Get.textTheme.button.copyWith(
-          color: Get.theme.primaryColor,
-          fontWeight: FontWeight.w900,
-        ),
-      ),
+  Widget _progressing() {
+    return BlocBuilder<LoginCubit, LoginState>(
+      builder: (context, state) {
+        return state.status.isSubmissionInProgress
+            ? FullScreenProgressingCustomWidget()
+            : SizedBox();
+      },
     );
   }
 }

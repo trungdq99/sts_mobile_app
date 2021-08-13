@@ -15,6 +15,7 @@ class UserState extends Equatable {
   final UserStatus status;
   final UserModel userModel;
   final String message;
+
   const UserState({
     this.status: UserStatus.initial,
     this.userModel: UserModel.empty,

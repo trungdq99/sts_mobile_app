@@ -7,9 +7,9 @@ import 'package:flutter/widgets.dart';
 import 'package:get/route_manager.dart';
 import 'package:sts/pages/add_request_page.dart';
 import 'package:sts/pages/login/login_page.dart';
-import 'package:sts/pages/main/main_page.dart';
+import 'package:sts/pages/main/main/main_page.dart';
 import 'package:sts/pages/main/tab/people_page.dart';
-import 'package:sts/pages/main/tab/home_page.dart';
+import 'package:sts/pages/home/home_page.dart';
 import 'package:sts/pages/main/tab/profile_page.dart';
 import 'package:sts/pages/main/tab/register/register_page.dart';
 import 'package:sts/pages/main/tab/schedule/schedule_page.dart';
@@ -19,7 +19,8 @@ import 'package:sts/pages/profile/job_info_page.dart';
 import 'package:sts/pages/select_location/select_location_page.dart';
 import 'package:sts/pages/shift_detail_page.dart';
 import 'package:sts/pages/splash_page.dart';
-import 'package:sts/pages/timesheet_page.dart';
+import 'package:sts/pages/attendance/attendance_page.dart';
+import 'package:sts/pages/work_report/work_report_page.dart';
 
 class RouteUtil {
   static const String LOGIN = '/login';
@@ -36,7 +37,8 @@ class RouteUtil {
   static const String CHANGE_PASSWORD = '/change_password';
   static const String SHIFT_DETAIL = '/shift_detail';
   static const String ADD_REQUEST = '/add_request';
-  static const String TIMESHEET = '/timesheet';
+  static const String ATTENDANCE = '/attendance';
+  static const String WORK_REPORT = '/work_report';
 
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     Widget page;
@@ -80,13 +82,22 @@ class RouteUtil {
         page = ChangePasswordPage();
         break;
       case SHIFT_DETAIL:
-        page = ShiftDetailPage();
+        page = ShiftDetailPage(
+          shiftAssignmentModel: settings.arguments,
+        );
         break;
       case ADD_REQUEST:
         page = AddRequestPage();
         break;
-      case TIMESHEET:
-        page = TimeSheetPage();
+      case ATTENDANCE:
+        page = AttendancePage(
+          shiftAttendanceBloc: settings.arguments,
+        );
+        break;
+      case WORK_REPORT:
+        page = WorkReportPage(
+          shiftAssignmentBloc: settings.arguments,
+        );
         break;
       default:
         page = Scaffold(

@@ -42,13 +42,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
         if (state.status == UserStatus.loadingSuccessful ||
             state.status == UserStatus.loadingFailure) {
           Get.dialog(NotificationDialogCustomWidget(
-            text: state.message,
+            message: state.message,
           ));
         }
       },
       builder: (context, state) {
         if (state.status == UserStatus.loadingSuccessful &&
             _userModel == UserModel.empty) {
+          _userModel = state.userModel;
+        } else if (state.status == UserStatus.loading) {
+          _userModel = UserModel.empty;
+        } else if (state.status == UserStatus.loadingFailure) {
           _userModel = state.userModel;
         }
         return Stack(
@@ -63,6 +67,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 showCheckButton: true,
                 onCheckButtonPressed: _userModel != state.userModel
                     ? () {
+                        FocusScope.of(context).unfocus();
                         _userBloc.add(UserEventUpdate(userModel: _userModel));
                       }
                     : null,
@@ -139,7 +144,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
         margin: EdgeInsets.all(0),
         controller: TextEditingController(text: _userModel.lastName),
         onChanged: (value) {
-          _userModel = _userModel.copyWith(lastName: value);
+          setState(() {
+            _userModel = _userModel.copyWith(lastName: value);
+          });
         });
   }
 
@@ -149,7 +156,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       margin: EdgeInsets.all(0),
       controller: TextEditingController(text: _userModel.firstName),
       onChanged: (value) {
-        _userModel = _userModel.copyWith(firstName: value);
+        setState(() {
+          _userModel = _userModel.copyWith(firstName: value);
+        });
       },
     );
   }
@@ -162,7 +171,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       keyboardType: TextInputType.emailAddress,
       controller: TextEditingController(text: _userModel.email),
       onChanged: (value) {
-        _userModel = _userModel.copyWith(email: value);
+        setState(() {
+          _userModel = _userModel.copyWith(email: value);
+        });
       },
     );
   }
@@ -175,7 +186,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       keyboardType: TextInputType.phone,
       controller: TextEditingController(text: _userModel.phone),
       onChanged: (value) {
-        _userModel = _userModel.copyWith(phone: value);
+        setState(() {
+          _userModel = _userModel.copyWith(phone: value);
+        });
       },
     );
   }
@@ -188,7 +201,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
       keyboardType: TextInputType.streetAddress,
       controller: TextEditingController(text: _userModel.address),
       onChanged: (value) {
-        _userModel = _userModel.copyWith(address: value);
+        setState(() {
+          _userModel = _userModel.copyWith(address: value);
+        });
       },
     );
   }
@@ -254,6 +269,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
           color: Get.theme.primaryColor,
           onPressed: state.userModel != _userModel
               ? () {
+                  FocusScope.of(context).unfocus();
                   _userBloc.add(UserEventUpdate(userModel: _userModel));
                 }
               : null,

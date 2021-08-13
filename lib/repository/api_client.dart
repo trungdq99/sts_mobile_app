@@ -4,9 +4,7 @@
 
 import 'package:get/get.dart';
 import 'package:sts/constant.dart';
-import 'package:sts/utils/function_util.dart';
-import 'package:sts/utils/response_status_util.dart';
-import 'package:sts/utils/url_util.dart';
+import 'package:sts/utils/utils.dart';
 
 enum RequestMethod {
   GET,

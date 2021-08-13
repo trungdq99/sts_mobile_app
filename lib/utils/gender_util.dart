@@ -2,18 +2,25 @@
  * Author: Trung Shin
  */
 
-class GenderUtil {
-  static const String MALE = 'male';
-  static const String FEMALE = 'female';
-  static const String UNKNOWN = 'unknown';
+enum Gender {
+  female,
+  male,
+  unknown,
+}
 
-  static String checkGender(dynamic gender) {
-    if (gender == null) return UNKNOWN;
-    if (gender.toString() == MALE)
-      return MALE;
-    else if (gender.toString() == FEMALE)
-      return FEMALE;
-    else
-      return UNKNOWN;
+class GenderUtil {
+  static const int FEMALE = 0;
+  static const int MALE = 1;
+  static const int UNKNOWN = 2;
+
+  static Gender getGender(int gender) {
+    switch (gender) {
+      case FEMALE:
+        return Gender.female;
+      case MALE:
+        return Gender.male;
+      default:
+        return Gender.unknown;
+    }
   }
 }

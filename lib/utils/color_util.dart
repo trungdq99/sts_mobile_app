@@ -8,6 +8,7 @@ class ColorUtil {
   static const WHITE = Color(0xfff2f2f2);
   static const PRIMARY_LIGHT = Color(0xff105cfa);
   static const PRIMARY_DARK = Color(0xff1767e0);
+  static const BLUE = Color(0xff105cfa);
   static const BLUE1 = Color(0xff5A8CF9);
   static const BLUE2 = Color(0xff4f84ba);
   static const BLUE3 = Color(0xff11a7fc);
@@ -16,8 +17,11 @@ class ColorUtil {
   static const ORANGE = Color(0xffdc673c);
   static const BLACK = Color(0xff272b2f);
 
-  static const TEXT_COLOR_LIGHT = Color.fromRGBO(112, 112, 112, 1);
+  static const TEXT_COLOR_LIGHT = Color(0xff242424);
   static const TEXT_COLOR_DARK = Color(0xffeeeeee);
+
+  static const HINT_COLOR_LIGHT = Color(0xff707070);
+  static const HINT_COLOR_DARK = Color(0xff777777);
 
   static const GREEN = Color(0xff00a806);
   static const YELLOW = Color(0xffffae00);

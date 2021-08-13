@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "309631526929",
-    "project_id": "sts-application",
-    "storage_bucket": "sts-application.appspot.com"
+    "project_number": "501846605386",
+    "firebase_url": "https://sts-manager-e9639-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "sts-manager-e9639",
+    "storage_bucket": "sts-manager-e9639.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:309631526929:android:ba0cc2810241a4a6c4a9b0",
+        "mobilesdk_app_id": "1:501846605386:android:61ec0891c0ae6cbd1bf0b3",
         "android_client_info": {
           "package_name": "com.example.sts"
         }
       },
       "oauth_client": [
         {
-          "client_id": "309631526929-ejdr50lkirrie84mmntq3j4fdi43i6dg.apps.googleusercontent.com",
+          "client_id": "501846605386-3c2autprk84kgdmlrbpdv4tbai5olcf2.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCLLAVTWIOi9bK1IBaFHc-NF8AEtlIvnd4"
+          "current_key": "AIzaSyClt518Ef4ruxa_zGtPSGin7feVHb4gZXg"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "309631526929-ejdr50lkirrie84mmntq3j4fdi43i6dg.apps.googleusercontent.com",
+              "client_id": "501846605386-3c2autprk84kgdmlrbpdv4tbai5olcf2.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "501846605386-34mb7f5761g37cvjdenmsmrnd1jdim68.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sts"
+              }
             }
           ]
         }

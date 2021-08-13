@@ -25,7 +25,7 @@ class NeumorphicStyleUtil {
       depth: 8,
       boxShape: boxShape ??
           NeumorphicBoxShape.roundRect(BorderRadius.circular(radius ?? 0)),
-      color: color ?? Get.theme.primaryColor,
+      color: color ?? Get.theme.backgroundColor,
       shadowDarkColor: Get.theme.shadowColor,
       shadowLightColor: Get.theme.highlightColor,
       shadowLightColorEmboss: Get.theme.highlightColor,
@@ -50,13 +50,36 @@ class NeumorphicStyleUtil {
       ),
       boxShape: boxShape ??
           NeumorphicBoxShape.roundRect(BorderRadius.circular(radius ?? 0)),
-      color: color ?? Get.theme.primaryColor,
+      color: color ?? Get.theme.backgroundColor,
       shadowDarkColor: Get.theme.shadowColor,
       shadowLightColor: Get.theme.highlightColor,
       shadowLightColorEmboss: Get.theme.highlightColor,
       shadowDarkColorEmboss: Get.theme.shadowColor,
       depth: -8,
       intensity: 0.5,
+      lightSource: lightSource,
+    );
+  }
+
+  static NeumorphicStyle styleOff({
+    double radius,
+    Color color,
+    Color shadowDarkColor,
+    Color shadowLightColor,
+    NeumorphicBoxShape boxShape,
+    LightSource lightSource: LightSource.top,
+  }) {
+    return NeumorphicStyle(
+      border: NeumorphicBorder.none(),
+      boxShape: boxShape ??
+          NeumorphicBoxShape.roundRect(BorderRadius.circular(radius ?? 20)),
+      color: color ?? Get.theme.backgroundColor,
+      shadowDarkColor: Get.theme.shadowColor,
+      shadowLightColor: Get.theme.highlightColor,
+      shadowLightColorEmboss: Get.theme.highlightColor,
+      shadowDarkColorEmboss: Get.theme.shadowColor,
+      depth: 0,
+      intensity: 0,
       lightSource: lightSource,
     );
   }

@@ -18,7 +18,9 @@ class ButtonCustomWidget extends StatelessWidget {
   final EdgeInsets padding;
   final EdgeInsets margin;
   final bool isUp;
+  final bool styleOff;
   final Alignment alignment;
+  final bool isDelay;
 
   const ButtonCustomWidget({
     this.width,
@@ -32,34 +34,42 @@ class ButtonCustomWidget extends StatelessWidget {
     this.padding: const EdgeInsets.all(10),
     this.margin: const EdgeInsets.all(20),
     this.isUp: true,
+    this.styleOff: false,
     this.alignment: Alignment.center,
+    this.isDelay: true,
   });
 
   @override
   Widget build(BuildContext context) {
-    Color buttonColor = Get.theme.backgroundColor;
-    if (onPressed == null) {
-      buttonColor = Get.theme.disabledColor;
-    } else if (color != null) {
-      buttonColor = color;
+    NeumorphicStyle style;
+    if (styleOff)
+      style = NeumorphicStyleUtil.styleOff(
+        radius: radius,
+        color: color,
+        boxShape: boxShape,
+      );
+    else {
+      if (isUp) {
+        style = NeumorphicStyleUtil.styleUp(
+          radius: radius,
+          color: color,
+          boxShape: boxShape,
+        );
+      } else {
+        style = NeumorphicStyleUtil.styleDown(
+          radius: radius,
+          color: color,
+          boxShape: boxShape,
+        );
+      }
     }
     return NeumorphicButton(
-      style: isUp
-          ? NeumorphicStyleUtil.styleUp(
-              radius: radius,
-              color: buttonColor,
-              boxShape: boxShape,
-            )
-          : NeumorphicStyleUtil.styleDown(
-              radius: radius,
-              color: buttonColor,
-              boxShape: boxShape,
-            ),
+      style: style,
       padding: EdgeInsets.all(0),
       margin: margin,
       onPressed: onPressed != null
           ? () async {
-              await Future.delayed(Duration(milliseconds: 100));
+              if (isDelay) await Future.delayed(Duration(milliseconds: 100));
               onPressed();
             }
           : null,

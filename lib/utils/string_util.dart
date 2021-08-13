@@ -24,4 +24,19 @@ class StringUtil {
 
   //
   static const String EXPIRED_LOGIN = 'Your Login session has expired!';
+
+  // Register Page
+  static const String REGISTER_PAGE_TITLE = 'Register';
+
+  static const String SCHEDULE_PAGE_TITLE = 'Schedule';
+
+  static const String DEFAULT_ERROR = 'Something went wrong!';
+
+  static const String TODAY = 'Today';
+
+  // Home Page
+  static const String UPCOMING_SHIFT = 'Upcoming Shift:';
+  static const String NO_UPCOMING_SHIFT = 'Empty!';
+  static const String LAST_ATTENDANCE = 'Last attendance this week:';
+  static const String WORK_REPORT = 'Total working hours this week:';
 }

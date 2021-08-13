@@ -19,6 +19,7 @@ class ContainerCustomWidget extends StatelessWidget {
   final EdgeInsets margin;
   final Alignment alignment;
   final bool isUp;
+  final bool styleOff;
   const ContainerCustomWidget({
     this.width,
     this.height,
@@ -31,22 +32,35 @@ class ContainerCustomWidget extends StatelessWidget {
     this.margin,
     this.alignment,
     this.isUp: true,
+    this.styleOff: false,
   });
 
   @override
   Widget build(BuildContext context) {
+    NeumorphicStyle style;
+    if (styleOff)
+      style = NeumorphicStyleUtil.styleOff(
+        radius: radius,
+        color: color,
+        boxShape: boxShape,
+      );
+    else {
+      if (isUp) {
+        style = NeumorphicStyleUtil.styleUp(
+          radius: radius,
+          color: color,
+          boxShape: boxShape,
+        );
+      } else {
+        style = NeumorphicStyleUtil.styleDown(
+          radius: radius,
+          color: color,
+          boxShape: boxShape,
+        );
+      }
+    }
     return Neumorphic(
-      style: isUp
-          ? NeumorphicStyleUtil.styleUp(
-              radius: radius,
-              color: color ?? Get.theme.backgroundColor,
-              boxShape: boxShape,
-            )
-          : NeumorphicStyleUtil.styleDown(
-              radius: radius,
-              color: color ?? Get.theme.backgroundColor,
-              boxShape: boxShape,
-            ),
+      style: style,
       padding: EdgeInsets.all(0),
       margin: margin ?? EdgeInsets.all(20),
       child: Container(

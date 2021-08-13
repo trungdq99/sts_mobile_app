@@ -7,12 +7,11 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:sts/custom_widget/notification_dialog_custom_widget.dart';
-import 'package:sts/models/authentication_model.dart';
-import 'package:sts/repository/authentication_repository.dart';
-import 'package:sts/repository/user_repository.dart';
-import 'package:sts/utils/function_util.dart';
-import 'package:sts/utils/response_status_util.dart';
+import 'package:sts/blocs/notification/notification_bloc.dart';
+import 'package:sts/custom_widget/custom_widget.dart';
+import 'package:sts/models/models.dart';
+import 'package:sts/repository/repository.dart';
+import 'package:sts/utils/utils.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
@@ -21,13 +20,16 @@ class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationRepository _authenticationRepository;
   final UserRepository _userRepository;
+  final NotificationBloc _notificationBloc;
   StreamSubscription<AuthenticationModel> _authenticationSubscription;
 
   AuthenticationBloc({
     @required AuthenticationRepository authenticationRepository,
     @required UserRepository userRepository,
+    @required NotificationBloc notificationBloc,
   })  : _authenticationRepository = authenticationRepository,
         _userRepository = userRepository,
+        _notificationBloc = notificationBloc,
         super(AuthenticationState()) {
     _authenticationSubscription =
         _authenticationRepository.authentication.listen(
@@ -61,11 +63,13 @@ class AuthenticationBloc
     AuthenticationEventChanged event,
   ) async* {
     if (event.authenticationModel == AuthenticationModel.empty) {
+      _notificationBloc.unSubcribeToTopic(state.authenticationModel.username);
       yield AuthenticationState.unauthenticated();
     } else {
       try {
         // Load User
-        await _userRepository.getUser();
+        _userRepository.getUser();
+        _notificationBloc.subcribeToTopic(event.authenticationModel.username);
         yield AuthenticationState.authenticated(
             authenticationModel: event.authenticationModel);
       } catch (e) {
@@ -74,7 +78,7 @@ class AuthenticationBloc
           FunctionUtil.handleUnauthentication(_authenticationRepository);
         } else {
           Get.dialog(NotificationDialogCustomWidget(
-            text: 'Error: $error',
+            message: 'Error: $error',
             isPop: false,
             onConfirm: () {
               _authenticationRepository.logout();

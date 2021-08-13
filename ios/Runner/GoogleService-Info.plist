@@ -6,21 +6,21 @@ Author: Trung Shin
 <plist version="1.0">
 	<dict>
 		<key>CLIENT_ID</key>
-		<string>309631526929-2hjnd1qqu6o9hrmkttee4furfjms1dh5.apps.googleusercontent.com</string>
+		<string>501846605386-34mb7f5761g37cvjdenmsmrnd1jdim68.apps.googleusercontent.com</string>
 		<key>REVERSED_CLIENT_ID</key>
-		<string>com.googleusercontent.apps.309631526929-2hjnd1qqu6o9hrmkttee4furfjms1dh5</string>
+		<string>com.googleusercontent.apps.501846605386-34mb7f5761g37cvjdenmsmrnd1jdim68</string>
 		<key>API_KEY</key>
-		<string>AIzaSyAbZOlV3ej2OWHdE1VIpYKKRFAqj3VgaBY</string>
+		<string>AIzaSyDdi_ZTtbR-RzLn2C8SsMIuO8dz-h59Q8E</string>
 		<key>GCM_SENDER_ID</key>
-		<string>309631526929</string>
+		<string>501846605386</string>
 		<key>PLIST_VERSION</key>
 		<string>1</string>
 		<key>BUNDLE_ID</key>
 		<string>com.example.sts</string>
 		<key>PROJECT_ID</key>
-		<string>sts-application</string>
+		<string>sts-manager-e9639</string>
 		<key>STORAGE_BUCKET</key>
-		<string>sts-application.appspot.com</string>
+		<string>sts-manager-e9639.appspot.com</string>
 		<key>IS_ADS_ENABLED</key>
 		<false></false>
 		<key>IS_ANALYTICS_ENABLED</key>
@@ -32,8 +32,8 @@ Author: Trung Shin
 		<key>IS_SIGNIN_ENABLED</key>
 		<true></true>
 		<key>GOOGLE_APP_ID</key>
-		<string>1:309631526929:ios:c09fe4e41dcbb975c4a9b0</string>
+		<string>1:501846605386:ios:5f3fff33a34e5cc81bf0b3</string>
 		<key>DATABASE_URL</key>
-		<string>https://sts-application-default-rtdb.firebaseio.com</string>
+		<string>https://sts-manager-e9639-default-rtdb.asia-southeast1.firebasedatabase.app</string>
 	</dict>
 </plist>

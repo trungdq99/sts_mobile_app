@@ -4,8 +4,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
-import 'package:sts/cubits/selected_index_cubit.dart';
-import 'package:sts/custom_widget/container_custom_widget.dart';
+import 'package:sts/cubits/cubits.dart';
+import 'custom_widget.dart';
 
 class BottomItem {
   final IconData icon;
@@ -76,9 +76,6 @@ class _BottomNavigationBarCustomWidgetState
       padding: EdgeInsets.only(
         top: 5,
       ),
-      // decoration: BoxDecoration(
-      //   gradient: GradientUtil.bottomTop(colors: ColorUtil.GRADIENT_BLUE),
-      // ),
       child: SafeArea(
         bottom: false,
         child: Row(
@@ -96,34 +93,36 @@ class _BottomNavigationBarCustomWidgetState
   }) {
     return BlocBuilder<SelectedIndexCubit, int>(
       builder: (context, state) {
-        return InkWell(
-          onTap: () => onPressed(index),
-          child: SafeArea(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                ContainerCustomWidget(
-                  radius: 5,
-                  isUp: state != index,
-                  width: 40,
-                  height: 40,
-                  margin: EdgeInsets.all(5),
-                  padding: EdgeInsets.all(0),
-                  color: Get.theme.backgroundColor,
-                  child: Icon(
-                    item.icon,
-                  ),
+        return SafeArea(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              ButtonCustomWidget(
+                onPressed: () => onPressed(index),
+                isDelay: false,
+                radius: 5,
+                isUp: state != index,
+                width: 40,
+                height: 40,
+                margin: EdgeInsets.all(5),
+                padding: EdgeInsets.all(0),
+                color: Get.theme.backgroundColor,
+                child: Icon(
+                  item.icon,
+                  color: state != index
+                      ? Get.theme.primaryColor
+                      : Get.theme.accentColor,
                 ),
-                Text(
-                  item.label,
-                  style: Get.textTheme.bodyText2.copyWith(
-                    fontWeight:
-                        state == index ? FontWeight.bold : FontWeight.normal,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+              ),
+              Text(
+                item.label,
+                style: Get.textTheme.bodyText2.copyWith(
+                  fontWeight:
+                      state == index ? FontWeight.bold : FontWeight.normal,
                 ),
-              ],
-            ),
+                overflow: TextOverflow.ellipsis,
+              ),
+            ],
           ),
         );
       },

@@ -6,9 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:sts/custom_widget/container_custom_widget.dart';
-
 import 'button_custom_widget.dart';
+import 'custom_widget.dart';
 
 class AppBarCustomWidget extends StatelessWidget
     implements PreferredSizeWidget {
@@ -65,15 +64,15 @@ class AppBarCustomWidget extends StatelessWidget
       },
       height: 40,
       width: 40,
-      color: Get.theme.primaryColor,
-      margin: EdgeInsets.symmetric(vertical: 5),
-      padding: EdgeInsets.all(10),
+      color: Get.theme.scaffoldBackgroundColor,
+      margin: EdgeInsets.symmetric(vertical: 0),
+      padding: EdgeInsets.all(0),
       boxShape: NeumorphicBoxShape.circle(),
       child: Icon(
         isFullscreenDialog
             ? FontAwesomeIcons.times
             : FontAwesomeIcons.chevronLeft,
-        color: Get.theme.backgroundColor,
+        color: Get.theme.primaryColor,
         size: 20,
       ),
     );

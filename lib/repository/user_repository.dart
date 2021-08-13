@@ -6,9 +6,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:sts/constant.dart';
-import 'package:sts/models/user_model.dart';
-import 'package:sts/utils/response_status_util.dart';
-import 'package:sts/utils/url_util.dart';
+import 'package:sts/models/models.dart';
+import 'package:sts/utils/utils.dart';
 import 'api_client.dart';
 
 class UserRepository {

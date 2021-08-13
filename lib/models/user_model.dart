@@ -3,8 +3,7 @@
  */
 
 import 'package:equatable/equatable.dart';
-import 'package:sts/utils/date_time_util.dart';
-import 'package:sts/utils/gender_util.dart';
+import 'package:sts/utils/utils.dart';
 
 class UserModel extends Equatable {
   final String username;
@@ -13,9 +12,10 @@ class UserModel extends Equatable {
   final String lastName;
   final String dob;
   final String phone;
-  final String gender;
+  final int gender;
   final String address;
   final String photoUrl;
+  final int brandId;
 
   const UserModel({
     this.username: '',
@@ -24,12 +24,24 @@ class UserModel extends Equatable {
     this.lastName: '',
     this.dob: '',
     this.phone: '',
-    this.gender,
+    this.gender: GenderUtil.UNKNOWN,
     this.address: '',
     this.photoUrl: '',
+    this.brandId: 0,
   });
 
-  static const empty = UserModel();
+  static const UserModel empty = UserModel(
+    username: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    dob: '',
+    phone: '',
+    gender: GenderUtil.UNKNOWN,
+    address: '',
+    photoUrl: '',
+    brandId: 0,
+  );
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
@@ -37,11 +49,12 @@ class UserModel extends Equatable {
       email: json['email'] ?? '',
       firstName: json['firstName'] ?? '',
       lastName: json['lastName'] ?? '',
-      dob: DateTimeUtil.formatDateTimeStringToDateString(json['dob'] ?? ''),
+      dob: json['dob'],
       phone: json['phone'] ?? '',
-      gender: GenderUtil.checkGender(json['gender']),
+      gender: json['gender'] ?? GenderUtil.UNKNOWN,
       address: json['address'] ?? '',
       photoUrl: json['photoUrl'] ?? '',
+      brandId: json['brandId'] ?? 0,
     );
   }
 
@@ -51,11 +64,12 @@ class UserModel extends Equatable {
       'email': email,
       'firstName': firstName,
       'lastName': lastName,
-      'dob': DateTimeUtil.formatDateStringToDateTimeString(dob),
+      'dob': dob,
       'phone': phone,
       'gender': gender,
       'address': address,
       'photoUrl': photoUrl,
+      'brandId': brandId,
     };
   }
 
@@ -68,9 +82,10 @@ class UserModel extends Equatable {
     String lastName,
     String dob,
     String phone,
-    String gender,
+    int gender,
     String address,
-    dynamic photoUrl,
+    String photoUrl,
+    int brandId,
   }) {
     return UserModel(
       username: username ?? this.username,
@@ -82,6 +97,7 @@ class UserModel extends Equatable {
       gender: gender ?? this.gender,
       address: address ?? this.address,
       photoUrl: photoUrl ?? this.photoUrl,
+      brandId: brandId ?? this.brandId,
     );
   }
 
@@ -100,6 +116,7 @@ class UserModel extends Equatable {
       gender,
       address,
       photoUrl,
+      brandId,
     ];
   }
 }

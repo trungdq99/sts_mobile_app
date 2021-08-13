@@ -7,25 +7,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:get/get.dart';
-import 'package:sts/blocs/user/user_bloc.dart';
-import 'package:sts/custom_widget/notification_dialog_custom_widget.dart';
 import 'package:sts/pages/splash_page.dart';
-import 'package:sts/repository/user_repository.dart';
-import 'package:sts/utils/color_util.dart';
-import 'package:sts/utils/function_util.dart';
-import 'package:sts/utils/route_util.dart';
-import 'blocs/authentication/authentication_bloc.dart';
-import 'cubits/internet_connection/internet_connection_cubit.dart';
-import 'repository/authentication_repository.dart';
+
+import 'blocs/blocs.dart';
+import 'cubits/cubits.dart';
+import 'custom_widget/custom_widget.dart';
+import 'repository/repository.dart';
+import 'utils/utils.dart';
 
 class App extends StatelessWidget {
   final AuthenticationRepository authenticationRepository;
   final UserRepository userRepository;
+  final BrandRepository brandRepository;
+  final SkillsRepository skillRepository;
+  final StoresRepository storeRepository;
 
   const App({
     Key key,
     @required this.authenticationRepository,
     @required this.userRepository,
+    @required this.brandRepository,
+    @required this.skillRepository,
+    @required this.storeRepository,
   }) : super(key: key);
 
   @override
@@ -36,6 +39,7 @@ class App extends StatelessWidget {
         providers: [
           BlocProvider(
             create: (_) => AuthenticationBloc(
+              notificationBloc: BlocProvider.of<NotificationBloc>(context),
               authenticationRepository: authenticationRepository,
               userRepository: userRepository,
             ),
@@ -47,6 +51,27 @@ class App extends StatelessWidget {
             create: (_) => UserBloc(
               userRepository: userRepository,
               authenticationRepository: authenticationRepository,
+              brandRepository: brandRepository,
+              skillRepository: skillRepository,
+              storeRepository: storeRepository,
+            ),
+          ),
+          BlocProvider(
+            create: (context) => BrandBloc(
+              authenticationRepository: authenticationRepository,
+              brandRepository: brandRepository,
+            ),
+          ),
+          BlocProvider(
+            create: (context) => StoresBloc(
+              authenticationRepository: authenticationRepository,
+              storeRepository: storeRepository,
+            ),
+          ),
+          BlocProvider(
+            create: (context) => SkillsBloc(
+              authenticationRepository: authenticationRepository,
+              skillRepository: skillRepository,
             ),
           ),
         ],
@@ -72,6 +97,9 @@ class AppView extends StatelessWidget {
         buttonColor: ColorUtil.WHITE,
         highlightColor: ColorUtil.LIGHT_SHADOW_LIGHT_THEME,
         shadowColor: ColorUtil.DARK_SHADOW_LIGHT_THEME,
+        hintColor: ColorUtil.HINT_COLOR_LIGHT,
+        disabledColor: ColorUtil.HINT_COLOR_LIGHT,
+        cardColor: ColorUtil.TEXT_COLOR_DARK,
         fontFamily: 'Aileron',
         iconTheme: IconThemeData(
           color: ColorUtil.PRIMARY_LIGHT,
@@ -90,6 +118,11 @@ class AppView extends StatelessWidget {
           ),
           bodyText2: TextStyle(
             fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: ColorUtil.TEXT_COLOR_LIGHT,
+          ),
+          caption: TextStyle(
+            fontSize: 12,
             fontWeight: FontWeight.normal,
             color: ColorUtil.TEXT_COLOR_LIGHT,
           ),
@@ -113,9 +146,10 @@ class AppView extends StatelessWidget {
         buttonColor: ColorUtil.BLACK,
         highlightColor: ColorUtil.LIGHT_SHADOW_DARK_THEME,
         shadowColor: ColorUtil.DARK_SHADOW_DARK_THEME,
-        hintColor: ColorUtil.GREY,
-        disabledColor: ColorUtil.GREY,
+        hintColor: ColorUtil.HINT_COLOR_DARK,
+        disabledColor: ColorUtil.HINT_COLOR_DARK,
         errorColor: ColorUtil.RED,
+        cardColor: ColorUtil.TEXT_COLOR_DARK,
         fontFamily: 'Aileron',
         iconTheme: IconThemeData(
           color: ColorUtil.PRIMARY_DARK,
@@ -134,6 +168,11 @@ class AppView extends StatelessWidget {
           ),
           bodyText2: TextStyle(
             fontSize: 14,
+            fontWeight: FontWeight.normal,
+            color: ColorUtil.TEXT_COLOR_DARK,
+          ),
+          caption: TextStyle(
+            fontSize: 12,
             fontWeight: FontWeight.normal,
             color: ColorUtil.TEXT_COLOR_DARK,
           ),
@@ -178,7 +217,7 @@ class AppView extends StatelessWidget {
                           return false;
                         },
                         child: NotificationDialogCustomWidget(
-                          text: 'No internet connection!',
+                          message: 'No internet connection!',
                           onConfirm: () {
                             AppSettings.openWIFISettings();
                           },

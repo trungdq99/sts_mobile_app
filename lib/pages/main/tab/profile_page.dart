@@ -7,6 +7,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:sts/blocs/authentication/authentication_bloc.dart';
+import 'package:sts/blocs/blocs.dart';
 import 'package:sts/blocs/user/user_bloc.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
@@ -18,6 +19,7 @@ import 'package:sts/utils/color_util.dart';
 import 'package:sts/utils/route_util.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:sts/utils/space_util.dart';
+import 'package:sts/utils/utils.dart';
 
 class ProfilePage extends StatefulWidget {
   @override
@@ -34,21 +36,21 @@ class _ProfilePageState extends State<ProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildInfo(),
-            SpaceUtil.verticalSmall(),
-            _buildTimeOfWork(),
-            SpaceUtil.verticalSmall(),
-            _buildRank(),
-            SpaceUtil.verticalDefault(),
+            SpaceUtil.verticalBig(),
+            // _buildTimeOfWork(),
+            // SpaceUtil.verticalSmall(),
+            // _buildRank(),
+            // SpaceUtil.verticalDefault(),
             _buildUpcomingShift(),
             SpaceUtil.verticalDefault(),
-            _buildAvailableShift(),
+            _buildWorkReport(),
             SpaceUtil.verticalDefault(),
-            _buildTimesheets(),
+            _buildAttendanceReport(),
             SpaceUtil.verticalBig(),
-            _buildLeave(),
-            SpaceUtil.verticalDefault(),
-            _buildUnavailability(),
-            SpaceUtil.verticalBig(),
+            // _buildLeave(),
+            // SpaceUtil.verticalDefault(),
+            // _buildUnavailability(),
+            // SpaceUtil.verticalBig(),
             _buildEditProfileButton(),
             SpaceUtil.verticalDefault(),
             _buildJobInfoButton(),
@@ -129,24 +131,45 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         title: Text(
-          'Ca sắp làm',
+          'Upcoming shift',
           style: Get.textTheme.button,
         ),
         trailing: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            ContainerCustomWidget(
-              isUp: false,
-              boxShape: NeumorphicBoxShape.circle(),
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(0),
-              child: Text(
-                '1',
-                style: Get.textTheme.bodyText1.copyWith(
-                  color: Get.theme.accentColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+            BlocBuilder<ShiftAssignmentBloc, ShiftAssignmentState>(
+              builder: (context, state) {
+                if (state.status == ShiftAssignmentStatus.loading) {
+                  return ProgressingCustomWidget();
+                } else {
+                  int count = 0;
+                  if (state.listCurWeekShiftAssignments.isNotEmpty) {
+                    int index = state.listCurWeekShiftAssignments
+                        .lastIndexWhere((element) => DateTime.now()
+                                .isBefore(DateTimeUtil.convertStringToDateTime(
+                              dateStr: element.timeStart,
+                              format: DateTimeUtil.YMDhms,
+                            )));
+                    if (index >= 0) {
+                      count = index + 1;
+                    }
+                  }
+
+                  return ContainerCustomWidget(
+                    isUp: false,
+                    boxShape: NeumorphicBoxShape.circle(),
+                    padding: EdgeInsets.all(10),
+                    margin: EdgeInsets.all(0),
+                    child: Text(
+                      count.toString(),
+                      style: Get.textTheme.bodyText1.copyWith(
+                        color: Get.theme.accentColor,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  );
+                }
+              },
             ),
             SpaceUtil.horizontalDefault(),
             Icon(
@@ -159,7 +182,7 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildAvailableShift() {
+  Widget _buildWorkReport() {
     return ButtonCustomWidget(
       margin: EdgeInsets.all(0),
       padding: EdgeInsets.all(0),
@@ -169,42 +192,23 @@ class _ProfilePageState extends State<ProfilePage> {
           color: ColorUtil.BLUE1,
           padding: EdgeInsets.all(5),
           child: Icon(
-            FontAwesomeIcons.calendarPlus,
+            FontAwesomeIcons.calendarWeek,
             color: Get.theme.backgroundColor,
           ),
         ),
         title: Text(
-          'Ca còn trống',
+          'Work report',
           style: Get.textTheme.button,
         ),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            ContainerCustomWidget(
-              isUp: false,
-              boxShape: NeumorphicBoxShape.circle(),
-              padding: EdgeInsets.all(10),
-              margin: EdgeInsets.all(0),
-              child: Text(
-                '3',
-                style: Get.textTheme.bodyText1.copyWith(
-                  color: Get.theme.accentColor,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SpaceUtil.horizontalDefault(),
-            Icon(
-              FontAwesomeIcons.chevronRight,
-              color: Get.theme.primaryColor,
-            ),
-          ],
+        trailing: Icon(
+          FontAwesomeIcons.chevronRight,
+          color: Get.theme.primaryColor,
         ),
       ),
     );
   }
 
-  Widget _buildTimesheets() {
+  Widget _buildAttendanceReport() {
     return ButtonCustomWidget(
       padding: EdgeInsets.all(0),
       margin: EdgeInsets.all(0),
@@ -219,7 +223,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         title: Text(
-          'Xem điểm danh',
+          'Attendance report',
           style: Get.textTheme.button,
         ),
         trailing: Icon(
@@ -237,7 +241,7 @@ class _ProfilePageState extends State<ProfilePage> {
         context.read<AuthenticationBloc>().add(AuthenticationEventLogout());
       },
       child: Text(
-        'Đăng xuất',
+        'Logout',
         style: Get.textTheme.button.copyWith(
           color: Get.theme.backgroundColor,
         ),
@@ -262,7 +266,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         title: Text(
-          'Đổi mật khẩu',
+          'Change password',
           style: Get.textTheme.button,
         ),
         trailing: Icon(
@@ -290,7 +294,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         title: Text(
-          'Thông tin công việc',
+          'Job information',
           style: Get.textTheme.button,
         ),
         trailing: Icon(
@@ -318,7 +322,7 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
         ),
         title: Text(
-          'Chỉnh sửa thông tin',
+          'Edit profile',
           style: Get.textTheme.button,
         ),
         trailing: Icon(

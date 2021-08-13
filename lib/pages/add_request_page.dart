@@ -70,7 +70,15 @@ class AddRequestPage extends StatelessWidget {
               padding: EdgeInsets.only(
                 left: 40,
               ),
-              child: TimeWorkingCustomWidget(),
+              child: TimeWorkingCustomWidget(
+                dateTimeRange: DateTimeRange(
+                    start: DateTime.now(),
+                    end: DateTime.now().add(
+                      Duration(
+                        hours: 1,
+                      ),
+                    )),
+              ),
             ),
             SpaceUtil.verticalDefault(),
             Row(

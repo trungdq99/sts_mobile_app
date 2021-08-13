@@ -3,47 +3,88 @@
  */
 
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:sts/utils/utils.dart';
 
 class DateTimeUtil {
   static const String DMY = 'dd - MM - yyyy';
-  static const String YMDhms = 'yyyy-MM-ddThh:mm:ss';
+  static const String YMDhms = 'yyyy-MM-ddTHH:mm:ss';
+  static const String YMD = 'yyyy/MM/dd';
   static const String EDMY = 'EE, dd - MM - yyyy';
+  static const String hm = 'HH:mm';
+  static const String D = 'dd';
+  static const String MMM = 'MMM';
 
-  static DateTime convertStringToDateTime(String date) {
+  static DateTime convertStringToDateTime({
+    @required String dateStr,
+    @required String format,
+  }) {
     DateTime result = DateTime.now();
     try {
-      result = DateFormat(YMDhms).parse(date);
+      result = DateFormat(format).parse(dateStr);
     } catch (e) {}
     return result;
   }
 
-  static DateTime convertStringToDate(String date) {
-    DateTime result = DateTime.now();
-    try {
-      result = DateFormat(DMY).parse(date);
-    } catch (e) {}
-    return result;
+  static String convertDateTimeToString({
+    @required DateTime dateTime,
+    @required String format,
+  }) {
+    return DateFormat(format).format(dateTime);
   }
 
-  static String convertDateToString(DateTime date) {
-    return DateFormat(EDMY).format(date);
+  static String convertDateTimeFormat({
+    @required String dateStr,
+    @required String fromFormat,
+    @required String toFormat,
+  }) {
+    if (toFormat == DMY) {
+      if (isToday(
+          dateTime:
+              convertStringToDateTime(dateStr: dateStr, format: fromFormat)))
+        return StringUtil.TODAY;
+    }
+    return convertDateTimeToString(
+      dateTime: convertStringToDateTime(
+        dateStr: dateStr,
+        format: fromFormat,
+      ),
+      format: toFormat,
+    );
   }
 
-  static String convertDateString(DateTime date) {
-    return DateFormat(DMY).format(date);
+  static bool isSameDay({
+    @required DateTime date1,
+    @required DateTime date2,
+  }) {
+    return date1.year == date2.year &&
+        date1.month == date2.month &&
+        date1.day == date2.day;
   }
 
-  static String convertDateTimeString(DateTime date) {
-    return DateFormat(YMDhms).format(date);
+  static bool isToday({@required DateTime dateTime}) => isSameDay(
+        date1: dateTime,
+        date2: getCurDay(),
+      );
+
+  static DateTime getCurDay() {
+    DateTime dateTime = DateTime.now();
+    return DateTime(
+      dateTime.year,
+      dateTime.month,
+      dateTime.day,
+    );
   }
 
-  static String formatDateTimeStringToDateString(String date) {
-    return convertDateString(convertStringToDateTime(date));
-  }
-
-  static String formatDateStringToDateTimeString(String date) {
-    return convertDateTimeString(convertStringToDate(date));
+  static DateTimeRange getCurWeek() {
+    DateTime curDay = getCurDay();
+    int currentWeekDay = curDay.weekday;
+    return DateTimeRange(
+      start: curDay.subtract(Duration(days: currentWeekDay - 1)),
+      end: curDay.add(Duration(days: 7 - currentWeekDay)),
+    );
   }
 
   static DateTimeRange getNextWeek(DateTime current) {
@@ -62,24 +103,30 @@ class DateTimeUtil {
     );
   }
 
-  static DateTimeRange getCurWeek(DateTime current) {
-    int currentWeekDay = current.weekday;
+  static DateTimeRange getWeek(DateTime dateTime) {
+    int currentWeekDay = dateTime.weekday;
     return DateTimeRange(
-      start: current.subtract(Duration(days: currentWeekDay - 1)),
-      end: current.add(Duration(days: 7 - currentWeekDay)),
+      start: dateTime.subtract(Duration(days: currentWeekDay - 1)),
+      end: dateTime.add(Duration(days: 7 - currentWeekDay)),
     );
   }
 
   static bool isSameWeek(DateTimeRange week1, DateTimeRange week2) {
     DateTime startWeek1 = week1.start;
     DateTime startWeek2 = week2.start;
-    return startWeek1.day == startWeek2.day &&
-        startWeek1.month == startWeek2.month &&
-        startWeek1.year == startWeek2.year;
+    return isSameDay(
+      date1: startWeek1,
+      date2: startWeek2,
+    );
   }
 
-  static bool isNextWeek(DateTimeRange week) {
-    return isSameWeek(getNextWeek(DateTime.now()), week);
+  static bool isFutureWeek(DateTimeRange week) {
+    if (week != null) {
+      DateTimeRange curWeek = getCurWeek();
+      return week.start.isAfter(curWeek.end);
+    } else {
+      return false;
+    }
   }
 
   static List<int> convertTimeToNum(String time) {
@@ -115,6 +162,47 @@ class DateTimeUtil {
     return DateTimeRange(
       start: startTime,
       end: endTime,
+    );
+  }
+
+  static bool isValidDateTimeRange(
+      DateTimeRange dateTimeRange1, DateTimeRange dateTimeRange2) {
+    if (dateTimeRange1.start.isAfter(dateTimeRange2.start) &&
+        dateTimeRange1.start.isAfter(dateTimeRange2.end)) {
+      return true;
+    } else if (dateTimeRange1.end.isBefore(dateTimeRange2.start) &&
+        dateTimeRange1.end.isBefore(dateTimeRange2.end)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static String dateTimeRangeToString(DateTimeRange dateTimeRange) {
+    return '${dateTimeRange.duration.inHours} hrs ${dateTimeRange.duration.inMinutes - dateTimeRange.duration.inHours * 60} min';
+  }
+
+  static pickTime({
+    @required BuildContext context,
+    DateTime currentTime,
+    ValueChanged<DateTime> onConfirm,
+  }) {
+    DatePicker.showTimePicker(
+      context,
+      currentTime: currentTime ?? getCurDay(),
+      showSecondsColumn: false,
+      theme: DatePickerTheme(
+        backgroundColor: Get.theme.backgroundColor,
+        doneStyle: Get.textTheme.button.copyWith(
+          color: Get.theme.primaryColor,
+        ),
+        cancelStyle: Get.textTheme.button,
+        headerColor: Get.theme.scaffoldBackgroundColor,
+        itemStyle: Get.textTheme.button,
+      ),
+      onConfirm: (time) {
+        if (onConfirm != null) onConfirm(time);
+      },
     );
   }
 }

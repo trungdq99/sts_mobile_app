@@ -3,7 +3,6 @@
  */
 
 import 'package:connectivity/connectivity.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -11,7 +10,6 @@ import 'package:sts/constant.dart';
 import 'package:sts/custom_widget/notification_dialog_custom_widget.dart';
 import 'package:sts/repository/authentication_repository.dart';
 import 'package:sts/utils/string_util.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class FunctionUtil {
   static Future<bool> checkConnection() async {
@@ -33,10 +31,6 @@ class FunctionUtil {
 
   static closeApp() {
     SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-  }
-
-  static bool isToday({@required DateTime date}) {
-    return isSameDay(date, DateTime.now());
   }
 
   static saveToken(String token) =>
@@ -65,7 +59,7 @@ class FunctionUtil {
   static void handleUnauthentication(
       AuthenticationRepository authenticationRepository) {
     Get.dialog(NotificationDialogCustomWidget(
-      text: StringUtil.EXPIRED_LOGIN,
+      message: StringUtil.EXPIRED_LOGIN,
       onConfirm: () {
         authenticationRepository.logout();
       },

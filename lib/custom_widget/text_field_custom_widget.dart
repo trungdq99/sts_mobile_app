@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:sts/custom_widget/container_custom_widget.dart';
-import 'package:sts/utils/color_util.dart';
-import 'package:sts/utils/space_util.dart';
+import 'package:sts/utils/utils.dart';
+
+import 'custom_widget.dart';
 
 class TextFieldCustomWidget extends StatefulWidget {
   final TextEditingController controller;
@@ -112,7 +112,7 @@ class _TextFieldCustomWidgetState extends State<TextFieldCustomWidget> {
                     border: InputBorder.none,
                     hintText: widget.hintText,
                     hintStyle: Get.textTheme.bodyText1.copyWith(
-                      color: ColorUtil.GREY.withOpacity(0.8),
+                      color: Get.theme.hintColor,
                     ),
                     counterText: '',
                     contentPadding: widget.prefixIcon != null
@@ -131,7 +131,7 @@ class _TextFieldCustomWidgetState extends State<TextFieldCustomWidget> {
                   minLines: widget.minLines,
                   maxLines: widget.maxLines,
                   keyboardType: widget.keyboardType,
-                  cursorColor: ColorUtil.PRIMARY_LIGHT,
+                  cursorColor: Get.theme.primaryColor,
                   obscureText: widget.obscureText,
                 ),
               ],
