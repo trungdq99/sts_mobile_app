@@ -28,7 +28,15 @@ class AttendancePage extends StatefulWidget {
 }
 
 class _AttendancePageState extends State<AttendancePage> {
-  Completer<void> _refreshCompleter = Completer<void>();
+  Completer<void> _refreshCompleter;
+
+  @override
+  void initState() {
+    _refreshCompleter = Completer<void>();
+    widget.shiftAttendanceBloc
+        .add(ShiftAttendanceEventGet(selectedWeek: DateTimeUtil.getCurWeek()));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -47,7 +47,7 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
                   color: ColorUtil.BLUE1,
                   child: Icon(
                     FontAwesomeIcons.hourglassStart,
-                    color: ColorUtil.WHITE,
+                    color: ColorUtil.TEXT_COLOR_DARK,
                   ),
                 ),
                 SpaceUtil.verticalSmall(),
@@ -70,10 +70,10 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
           Column(
             children: [
               CircleAvatarCustomWidget(
-                color: ColorUtil.BLUE1,
+                color: ColorUtil.BLUE2,
                 child: Icon(
                   FontAwesomeIcons.hourglassEnd,
-                  color: ColorUtil.WHITE,
+                  color: ColorUtil.TEXT_COLOR_DARK,
                 ),
               ),
               SpaceUtil.verticalSmall(),
@@ -100,7 +100,7 @@ class _TimeWorkingCustomWidgetState extends State<TimeWorkingCustomWidget> {
                 color: ColorUtil.ORANGE,
                 child: Icon(
                   FontAwesomeIcons.solidHourglass,
-                  color: ColorUtil.WHITE,
+                  color: ColorUtil.TEXT_COLOR_DARK,
                 ),
               ),
               SpaceUtil.verticalSmall(),

@@ -10,6 +10,8 @@ import 'package:sts/blocs/blocs.dart';
 import 'package:sts/custom_widget/custom_widget.dart';
 import 'package:sts/utils/utils.dart';
 
+import 'widgets.dart';
+
 class ShiftAssignmentWidget extends StatelessWidget {
   final DateTime dateTime;
   const ShiftAssignmentWidget({
@@ -99,23 +101,9 @@ class ShiftAssignmentWidget extends StatelessWidget {
                             radius: 5,
                             child: Column(
                               children: [
-                                ContainerCustomWidget(
-                                  padding: EdgeInsets.symmetric(
-                                    vertical: 5,
-                                  ),
-                                  margin: EdgeInsets.all(0),
-                                  radius: 0,
-                                  width: double.infinity,
-                                  color: Get.theme.disabledColor,
-                                  child: Text(
-                                    'Not yet',
-                                    style: Get.textTheme.caption.copyWith(
-                                      color: ColorUtil.TEXT_COLOR_DARK,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    overflow: TextOverflow.ellipsis,
-                                    textAlign: TextAlign.center,
-                                  ),
+                                ShiftStatusWidget(
+                                  shiftAssignmentModel:
+                                      state.listShiftAssignments[i],
                                 ),
                                 SpaceUtil.verticalSmall(),
                                 Text(

@@ -3,7 +3,6 @@
  */
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:sts/blocs/blocs.dart';
 import 'package:sts/utils/utils.dart';
 
@@ -21,15 +20,14 @@ class WorkReportWidget extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(
-                '20 hrs 8 min / 20 hrs 0 min',
-                style: Get.textTheme.headline6,
-                textAlign: TextAlign.center,
-              ),
               SpaceUtil.verticalSmall(),
               for (int i = 0; i < state.listShiftAssignments.length; i++)
-                ShiftWidget(
-                    shiftAssignmentModel: state.listShiftAssignments[i]),
+                state.listShiftAssignments[i].timeCheckIn.contains('0001') ||
+                        state.listShiftAssignments[i].timeCheckOut
+                            .contains('0001')
+                    ? SizedBox()
+                    : ShiftWidget(
+                        shiftAssignmentModel: state.listShiftAssignments[i]),
               SpaceUtil.verticalBig(),
             ],
           ),

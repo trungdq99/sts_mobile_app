@@ -33,7 +33,6 @@ class BrandBloc extends Bloc<BrandEvent, BrandState> {
   @override
   Future<void> close() {
     _brandSubcription?.cancel();
-    _authenticationRepository?.dispose();
     _brandRepository?.dispose();
     return super.close();
   }

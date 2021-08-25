@@ -63,7 +63,9 @@ class AuthenticationBloc
     AuthenticationEventChanged event,
   ) async* {
     if (event.authenticationModel == AuthenticationModel.empty) {
-      _notificationBloc.unSubcribeToTopic(state.authenticationModel.username);
+      if (state.authenticationModel.username.isNotEmpty) {
+        _notificationBloc.unSubcribeToTopic(state.authenticationModel.username);
+      }
       yield AuthenticationState.unauthenticated();
     } else {
       try {

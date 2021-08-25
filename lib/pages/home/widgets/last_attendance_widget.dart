@@ -23,8 +23,8 @@ class _LastAttendanceWidgetState extends State<LastAttendanceWidget> {
     return BlocBuilder<ShiftAttendanceBloc, ShiftAttendanceState>(
       builder: (context, state) {
         if (state.status == ShiftAttendanceStatus.loadingSuccessful &&
-            state.listShiftAttendance.isNotEmpty) {
-          return _buildAttendance(state.listShiftAttendance[0]);
+            state.listCurWeekShiftAttendance.isNotEmpty) {
+          return _buildAttendance(state.listCurWeekShiftAttendance[0]);
         } else if (state.status == ShiftAttendanceStatus.loading) {
           return _buildLoading();
         } else {

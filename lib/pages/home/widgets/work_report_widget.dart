@@ -20,8 +20,10 @@ class WorkReportWidget extends StatelessWidget {
       margin: EdgeInsets.all(0),
       padding: EdgeInsets.all(10),
       onPressed: () {
-        Get.toNamed(RouteUtil.WORK_REPORT,
-            arguments: BlocProvider.of<ShiftAssignmentBloc>(context));
+        Get.toNamed(
+          RouteUtil.WORK_REPORT,
+          arguments: BlocProvider.of<ShiftAssignmentBloc>(context),
+        );
       },
       child: Row(
         children: [

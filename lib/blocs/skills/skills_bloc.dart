@@ -30,7 +30,6 @@ class SkillsBloc extends Bloc<SkillsEvent, SkillsState> {
   @override
   Future<void> close() {
     _listSkillsSubcription?.cancel();
-    _authenticationRepository?.dispose();
     _skillRepository?.dispose();
     return super.close();
   }

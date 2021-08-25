@@ -69,6 +69,15 @@ class _WorkReportPageState extends State<WorkReportPage> {
                   child: Stack(
                     fit: StackFit.expand,
                     children: [
+                      // BlocBuilder<WorkReportBloc, WorkReportState>(
+                      //   builder: (context, state) {
+                      //     return Text(
+                      //       '${state.workReportModel.hoursWorked} / ${state.workReportModel.hoursAssigned}',
+                      //       style: Get.textTheme.headline6,
+                      //       textAlign: TextAlign.center,
+                      //     );
+                      //   },
+                      // ),
                       BlocProvider.value(
                         value: widget.shiftAssignmentBloc,
                         child: WorkReportWidget(),

@@ -13,6 +13,15 @@ import 'api_client.dart';
 class ShiftAttendanceRepository {
   ShiftAttendanceRepository();
 
+  final StreamController<List<ShiftAttendanceModel>> _controller =
+      StreamController<List<ShiftAttendanceModel>>();
+
+  Stream<List<ShiftAttendanceModel>> get curWeekAttendance async* {
+    yield* _controller.stream;
+  }
+
+  void dispose() => _controller.close();
+
   // Get shift attendances
   Future<List<ShiftAttendanceModel>> getShiftAttendance(
       {DateTimeRange selectedWeek}) async {
@@ -45,6 +54,9 @@ class ShiftAttendanceRepository {
         Map<String, dynamic> json = element;
         listShiftAttendanceModel.add(ShiftAttendanceModel.fromJson(json));
       });
+      if (DateTimeUtil.isSameWeek(DateTimeUtil.getCurWeek(), selectedWeek)) {
+        _controller.add(listShiftAttendanceModel);
+      }
       return listShiftAttendanceModel;
       // _controller.add(userModel);
     } else {

@@ -9,6 +9,7 @@ import 'package:get/get.dart';
 import 'package:sts/blocs/authentication/authentication_bloc.dart';
 import 'package:sts/blocs/blocs.dart';
 import 'package:sts/blocs/user/user_bloc.dart';
+import 'package:sts/cubits/cubits.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
 import 'package:sts/custom_widget/circle_avatar_custom_widget.dart';
@@ -120,7 +121,9 @@ class _ProfilePageState extends State<ProfilePage> {
     return ButtonCustomWidget(
       padding: EdgeInsets.all(0),
       margin: EdgeInsets.all(0),
-      onPressed: () {},
+      onPressed: () {
+        BlocProvider.of<SelectedIndexCubit>(context).emit(1);
+      },
       child: ListTile(
         leading: CircleAvatarCustomWidget(
           color: ColorUtil.BLUE1,

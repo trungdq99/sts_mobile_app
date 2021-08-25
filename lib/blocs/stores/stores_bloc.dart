@@ -27,7 +27,6 @@ class StoresBloc extends Bloc<StoresEvent, StoresState> {
   @override
   Future<void> close() {
     _listStoresSubcription?.cancel();
-    _authenticationRepository?.dispose();
     _storeRepository?.dispose();
     return super.close();
   }

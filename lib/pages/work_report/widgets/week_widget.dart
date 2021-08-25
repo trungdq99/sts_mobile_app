@@ -44,8 +44,8 @@ class WeekWidget extends StatelessWidget {
               current,
             ),
             listener: (context, state) {
-              // BlocProvider.of<ShiftAttendanceBloc>(context)
-              //     .add(ShiftAttendanceEventGet(selectedWeek: state));
+              BlocProvider.of<ShiftAttendanceBloc>(context)
+                  .add(ShiftAttendanceEventGet(selectedWeek: state));
             },
             builder: (context, state) {
               return ContainerCustomWidget(

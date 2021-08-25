@@ -190,7 +190,6 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildBody() {
     return BlocBuilder<SelectedIndexCubit, int>(
-      bloc: _selectedIndexCubit,
       builder: (context, state) {
         return IndexedStack(
           children: [
@@ -214,9 +213,9 @@ class _MainPageState extends State<MainPage> {
 
   Widget _buildBottomNavigationBar() {
     return BlocBuilder<SelectedIndexCubit, int>(
-      bloc: _selectedIndexCubit,
       builder: (context, state) {
         return BottomNavigationBarCustomWidget(
+          controller: _selectedIndexCubit,
           listBottomItems: [
             BottomItem(
               icon: FontAwesomeIcons.home,

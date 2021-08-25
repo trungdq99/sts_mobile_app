@@ -16,16 +16,11 @@ class ShiftAttendanceEventGet extends ShiftAttendanceEvent {
       ];
 }
 
-class ShiftAttendanceEventChanged extends ShiftAttendanceEvent {
+class ShiftAttendanceEventCurWeekChanged extends ShiftAttendanceEvent {
   final List<ShiftAttendanceModel> listShiftAttendance;
-  final DateTimeRange selectedWeek;
-  const ShiftAttendanceEventChanged({
-    @required this.listShiftAttendance,
-    @required this.selectedWeek,
-  });
+  const ShiftAttendanceEventCurWeekChanged(
+      {@required this.listShiftAttendance});
+
   @override
-  List<Object> get props => [
-        listShiftAttendance,
-        selectedWeek,
-      ];
+  List<Object> get props => [listShiftAttendance];
 }

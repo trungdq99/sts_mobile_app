@@ -11,6 +11,7 @@ class StoresState extends Equatable {
   final StoresStatus status;
   final List<StoreModel> listStores;
   final String message;
+  
   const StoresState({
     this.status: StoresStatus.initial,
     this.listStores: const [],

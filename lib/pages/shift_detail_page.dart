@@ -11,6 +11,7 @@ import 'package:sts/blocs/blocs.dart';
 import 'package:sts/custom_widget/app_bar_custom_widget.dart';
 import 'package:sts/custom_widget/button_custom_widget.dart';
 import 'package:sts/custom_widget/container_custom_widget.dart';
+import 'package:sts/custom_widget/custom_widget.dart';
 import 'package:sts/custom_widget/icon_text_custom_widget.dart';
 import 'package:sts/custom_widget/time_working_custom_widget.dart';
 import 'package:sts/models/shift_assignment_model.dart';
@@ -54,9 +55,8 @@ class ShiftDetailPage extends StatelessWidget {
                   return IconTextCustomWidget(
                     icon: FontAwesomeIcons.mapMarkerAlt,
                     backgroundIconColor: ColorUtil.BLUE2,
-                    iconColor: ColorUtil.WHITE,
+                    iconColor: ColorUtil.TEXT_COLOR_DARK,
                     text: index >= 0 ? storesState.listStores[index].name : '',
-                    // iconColor: ColorUtil.BLUE2,
                   );
                 },
               ),
@@ -77,7 +77,7 @@ class ShiftDetailPage extends StatelessWidget {
                     icon: FontAwesomeIcons.tag,
                     text: index >= 0 ? skillsState.listSkills[index].name : '',
                     backgroundIconColor: ColorUtil.BLUE3,
-                    iconColor: ColorUtil.WHITE,
+                    iconColor: ColorUtil.TEXT_COLOR_DARK,
                   );
                 },
               ),
@@ -89,7 +89,7 @@ class ShiftDetailPage extends StatelessWidget {
               child: IconTextCustomWidget(
                 icon: FontAwesomeIcons.calendar,
                 backgroundIconColor: ColorUtil.BLUE,
-                iconColor: ColorUtil.WHITE,
+                iconColor: ColorUtil.TEXT_COLOR_DARK,
                 text: '${DateTimeUtil.convertDateTimeFormat(
                   dateStr: shiftAssignmentModel.timeStart,
                   fromFormat: DateTimeUtil.YMDhms,
@@ -110,7 +110,6 @@ class ShiftDetailPage extends StatelessWidget {
                 ),
               ),
             ),
-            SpaceUtil.verticalDefault(),
             // Row(
             //   children: [
             //     Icon(
@@ -171,34 +170,70 @@ class ShiftDetailPage extends StatelessWidget {
             // Get.arguments == 'Sắp tới'
             //     ?
             SpaceUtil.verticalBig(),
-            Row(
-              children: [
-                Expanded(
-                  child: ButtonCustomWidget(
-                    margin: EdgeInsets.all(0),
-                    child: Text(
-                      'Request absence',
-                      style: Get.textTheme.button,
-                    ),
-                    onPressed: () {},
-                  ),
-                ),
-                SpaceUtil.horizontalDefault(),
-                Expanded(
-                  child: ButtonCustomWidget(
-                    margin: EdgeInsets.all(0),
-                    color: Get.theme.primaryColor,
-                    child: Text(
-                      'Request swap shift',
-                      style: Get.textTheme.button.copyWith(
-                        color: ColorUtil.TEXT_COLOR_DARK,
+
+            DateTimeUtil.isFutureDay(DateTimeUtil.convertStringToDateTime(
+              dateStr: shiftAssignmentModel.timeStart,
+              format: DateTimeUtil.YMDhms,
+            ))
+                ? Row(
+                    children: [
+                      Expanded(
+                        child: ButtonCustomWidget(
+                          margin: EdgeInsets.all(0),
+                          child: Text(
+                            'Request absence',
+                            style: Get.textTheme.button,
+                          ),
+                          onPressed: () {},
+                        ),
                       ),
-                    ),
-                    onPressed: () {},
+                      SpaceUtil.horizontalDefault(),
+                      Expanded(
+                        child: ButtonCustomWidget(
+                          margin: EdgeInsets.all(0),
+                          color: Get.theme.primaryColor,
+                          child: Text(
+                            'Request swap shift',
+                            style: Get.textTheme.button.copyWith(
+                              color: ColorUtil.TEXT_COLOR_DARK,
+                            ),
+                          ),
+                          onPressed: () {},
+                        ),
+                      ),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      Divider(
+                        color: Get.theme.accentColor,
+                        thickness: 2,
+                        height: 40,
+                      ),
+                      Text(
+                        'Work report',
+                        style: Get.textTheme.bodyText1.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      SpaceUtil.verticalDefault(),
+                      shiftAssignmentModel.timeCheckIn.contains('0001') ||
+                              shiftAssignmentModel.timeCheckOut.contains('0001')
+                          ? SizedBox()
+                          : TimeWorkingCustomWidget(
+                              dateTimeRange: DateTimeRange(
+                                start: DateTimeUtil.convertStringToDateTime(
+                                  dateStr: shiftAssignmentModel.timeCheckIn,
+                                  format: DateTimeUtil.YMDhms,
+                                ),
+                                end: DateTimeUtil.convertStringToDateTime(
+                                  dateStr: shiftAssignmentModel.timeCheckOut,
+                                  format: DateTimeUtil.YMDhms,
+                                ),
+                              ),
+                            ),
+                    ],
                   ),
-                ),
-              ],
-            ),
             // : SizedBox()
           ],
         ),

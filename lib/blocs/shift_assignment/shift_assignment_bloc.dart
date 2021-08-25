@@ -32,6 +32,13 @@ class ShiftAssignmentBloc
   }
 
   @override
+  Future<void> close() {
+    _listShiftAssignmentSubcription?.cancel();
+    _shiftAssignmentRepository?.dispose();
+    return super.close();
+  }
+
+  @override
   Stream<ShiftAssignmentState> mapEventToState(
     ShiftAssignmentEvent event,
   ) async* {
@@ -104,6 +111,7 @@ class ShiftAssignmentBloc
         status: ShiftAssignmentStatus.loading,
       );
       yield state.copyWith(
+        status: ShiftAssignmentStatus.loadingSuccessful,
         listCurWeekShiftAssignments: event.listShiftAssignment,
       );
     } else {

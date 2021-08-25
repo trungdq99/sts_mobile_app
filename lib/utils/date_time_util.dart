@@ -129,6 +129,11 @@ class DateTimeUtil {
     }
   }
 
+  static bool isFutureDay(DateTime dateTime) {
+    DateTime current = DateTime.now();
+    return current.isBefore(dateTime);
+  }
+
   static List<int> convertTimeToNum(String time) {
     List<int> result = [0, 0];
     try {

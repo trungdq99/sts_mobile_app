@@ -2,6 +2,8 @@
  * Author: Trung Shin
  */
 
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
@@ -16,12 +18,26 @@ class ShiftAttendanceBloc
     extends Bloc<ShiftAttendanceEvent, ShiftAttendanceState> {
   final ShiftAttendanceRepository _shiftAttendanceRepository;
   final AuthenticationRepository _authenticationRepository;
+  StreamSubscription<List<ShiftAttendanceModel>>
+      _listShiftAttendanceSubcription;
+
   ShiftAttendanceBloc({
     @required ShiftAttendanceRepository shiftAttendanceRepository,
     @required AuthenticationRepository authenticationRepository,
   })  : _shiftAttendanceRepository = shiftAttendanceRepository,
         _authenticationRepository = authenticationRepository,
-        super(ShiftAttendanceState());
+        super(ShiftAttendanceState()) {
+    _listShiftAttendanceSubcription =
+        _shiftAttendanceRepository.curWeekAttendance.listen((event) => add(
+            ShiftAttendanceEventCurWeekChanged(listShiftAttendance: event)));
+  }
+
+  @override
+  Future<void> close() {
+    _listShiftAttendanceSubcription?.cancel();
+    _shiftAttendanceRepository?.dispose();
+    return super.close();
+  }
 
   @override
   Stream<ShiftAttendanceState> mapEventToState(
@@ -29,7 +45,7 @@ class ShiftAttendanceBloc
   ) async* {
     if (event is ShiftAttendanceEventGet) {
       yield* _mapGetToState(event);
-    } else if (event is ShiftAttendanceEventChanged) {
+    } else if (event is ShiftAttendanceEventCurWeekChanged) {
       yield* _mapChangedToState(event);
     }
   }
@@ -70,12 +86,14 @@ class ShiftAttendanceBloc
   }
 
   Stream<ShiftAttendanceState> _mapChangedToState(
-    ShiftAttendanceEventChanged event,
+    ShiftAttendanceEventCurWeekChanged event,
   ) async* {
-    if (event.listShiftAttendance != null && event.selectedWeek != null) {
+    if (event.listShiftAttendance != null) {
       yield state.copyWith(
-        listShiftAttendance: event.listShiftAttendance,
-        selectedWeek: event.selectedWeek,
+        status: ShiftAttendanceStatus.loading,
+      );
+      yield state.copyWith(
+        listCurWeekShiftAttendance: event.listShiftAttendance,
         status: ShiftAttendanceStatus.loadingSuccessful,
       );
     } else {

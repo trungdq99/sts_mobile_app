@@ -34,8 +34,8 @@ dependencies:
   package_info: ^2.0.0
   flutter_placeholder_textlines: ^1.0.4
   flutter_spinkit: ^5.0.0
-  app_settings: ^4.1.0
-  connectivity: ^3.0.3
+  app_settings: ^4.1.1
+  connectivity: ^3.0.6
   get: ^4.1.4
   cached_network_image: ^3.0.0
   table_calendar: ^3.0.0
